@@ -10,7 +10,6 @@ const port = process.env.PORT || 3000;
 
 //import passport middleware
 require('./server/middlewear/passport');
-const publicPath = path.join(__dirname, 'client', 'public');
 
 //initialize middlewears
 app.use(helmet());
@@ -19,7 +18,6 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors(origin = {origin:isProduction ? process.env.HEROKU_URL : process.env.CLIENT_URL, credentials: true }));
 app.options('*', cors(origin));
-app.use(express.static(publicPath));
 app.use(passport.initialize());
 
 //import routes
