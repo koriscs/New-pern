@@ -38,7 +38,7 @@ export default function Account() {
 
   useEffect(() => {
     accountInfo()
-  }, [])
+  })
 
   return  loading ? (
      <Layout>

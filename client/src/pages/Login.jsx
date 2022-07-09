@@ -46,7 +46,7 @@ export default function Login() {
   
   useEffect ( () =>{
     getUser();
-  }, []) 
+  }) 
 
   return (
     <Layout>

@@ -50,7 +50,7 @@ export default function Cart() {
 
       useEffect(() =>{
         fetchCart();
-      },[])
+      })
   return loading ? (
     <Layout>
     <div>Loading...</div>

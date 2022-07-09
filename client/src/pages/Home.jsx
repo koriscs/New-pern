@@ -26,7 +26,7 @@ export default function Home() {
 
   useEffect( () =>{
       fetchProducts();
-  },[]);
+  });
   
   return (
     <Layout>

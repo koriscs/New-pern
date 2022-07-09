@@ -67,7 +67,7 @@ export default function Product() {
     useEffect(() =>{
         getProduct();
         accountInfo();
-    },[])
+    })
 
   return !loading ? (
     <Layout>
