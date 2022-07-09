@@ -6,7 +6,7 @@ const cors = require('cors')
 require('dotenv').config();
 const helmet = require('helmet');
 const isProduction = process.env.NODE_ENV === 'production';
-
+const port = process.env.PORT || 3000;
 //import passport middleware
 require('./server/middlewear/passport');
 
@@ -16,7 +16,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(cors({origin:isProduction ? process.env.HEROKU_URL : process.env.CLIENT_URL, credentials: true }));
+app.use(cors(origin = {origin:isProduction ? process.env.HEROKU_URL : process.env.CLIENT_URL, credentials: true }));
 app.options('*', cors(origin));
 app.use(passport.initialize());
 
@@ -33,12 +33,19 @@ app.use('/cart', cartRouter);
 
 const appStart = () => {
     try{
-    app.listen(isProduction ? process.env.HEROKU_URL : process.env.SERVER_URL, () =>{
-        console.log(`The app is listening on ${isProduction ? process.env.HEROKU_URL : process.env.SERVER_URL}`)
+    app.listen(port, () =>{
+        console.log(`The app is listening on ${port}`)
     })
         } catch (error) {
     console.log(`Error: ${error.message}`)
     } 
 }
-
+app.use((error, req, res, next) => {
+    res.status(error.status || 500).send({
+    error: {
+    status: error.status || 500,
+    message: error.message || 'Internal Server Error',
+    },
+  });
+  })
 appStart();

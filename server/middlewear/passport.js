@@ -3,14 +3,13 @@ const { Strategy } = require('passport-jwt')
 const { SECRET } = require('../const/index')
 const pool = require('../database/index')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-
+require('dotenv').config();
 
 const cookieExtractor = function (req) {
   let token = null
   if (req && req.cookies) token = req.cookies['token']
   return token
 }
-
 const opts = {
   secretOrKey: SECRET,
   jwtFromRequest: cookieExtractor,
