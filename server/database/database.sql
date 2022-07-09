@@ -56,7 +56,10 @@ total_price money
  );
  
 
-
+SELECT size, sub_total, item_name, image_url, quantity  FROM cart AS c
+JOIN products AS p
+ON c.product_id = p.id
+WHERE c.customer_id = 4;
 
 
 

@@ -9,20 +9,25 @@ require('dotenv').config();
 
 
 //import passport middleware
-//require('./middlewares/passport-middleware');
+require('./middlewear/passport');
 
 
 //initialize middlewears
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: CLIENT_URL, credentials: true }));
+app.use(cors({origin:"http://localhost:3001", credentials: true }));
 app.use(passport.initialize());
 
 //import routes
 const authRouter = require('./routes/auth');
+const productRouter = require('./routes/products');
+const cartRouter = require('./routes/cart');
 
 //initialize routes
 app.use('/auth', authRouter);
+app.use('/products', productRouter);
+app.use('/cart', cartRouter);
+
 
 const appStart = () => {
     try{
