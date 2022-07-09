@@ -1,5 +1,4 @@
 const express = require('express');
-const { PORT, CLIENT_URL, SERVER_URL } = require('./const/index');
 const app = express();
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
@@ -9,7 +8,7 @@ const helmet = require('helmet');
 const isProduction = process.env.NODE_ENV === 'production';
 
 //import passport middleware
-require('./middlewear/passport');
+require('./server/middlewear/passport');
 
 
 //initialize middlewears
@@ -22,9 +21,9 @@ app.options('*', cors(origin));
 app.use(passport.initialize());
 
 //import routes
-const authRouter = require('./routes/auth');
-const productRouter = require('./routes/products');
-const cartRouter = require('./routes/cart');
+const authRouter = require('./server/routes/auth');
+const productRouter = require('./server/routes/products');
+const cartRouter = require('./server/routes/cart');
 
 //initialize routes
 app.use('/auth', authRouter);
