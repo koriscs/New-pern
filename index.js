@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 
 //import passport middleware
 require('./middlewear/passport');
-
+app.use(express.static(path.join(__dirname, "client/build")))
 //initialize middlewears
 app.use(helmet());
 app.use(express.json());
@@ -20,6 +20,7 @@ app.use(cookieParser());
 app.use(cors(origin = {origin:isProduction ? process.env.HEROKU_URL : process.env.CLIENT_URL, credentials: true }));
 app.options('*', cors(origin));
 app.use(passport.initialize());
+
 //server static content
 //npm run build 
 if (process.env.NODE_ENV === "production") {
