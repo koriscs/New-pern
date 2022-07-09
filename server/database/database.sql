@@ -28,17 +28,15 @@ CREATE TABLE IF NOT EXISTS "products" (
 
 CREATE TABLE  IF NOT EXISTS cart(
 id  SERIAL PRIMARY KEY,
-customer_id int REFERENCES customers(id)
-);
-
-CREATE TABLE IF NOT EXISTS cart_details (
-cart_id int REFERENCES cart(id),
+customer_id int REFERENCES customers(id),
 product_id int REFERENCES products(id),
 size varchar(3) ,
 quantity int ,
 sub_total money,
-UNIQUE(cart_id, product_id, size)
+UNIQUE(customer_id, product_id, size)
 );
+
+
 
 CREATE TABLE IF NOT EXISTS orders(
 id  SERIAL PRIMARY KEY,
