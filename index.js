@@ -16,8 +16,8 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-//app.use(cors(origin = {origin:isProduction ? process.env.HEROKU_URL : process.env.CLIENT_URL, credentials: true }));
-//app.options('*', cors(origin));
+app.use(cors(origin = {origin:isProduction ? process.env.HEROKU_URL : process.env.CLIENT_URL, credentials: true }));
+app.options('*', cors(origin));
 app.use(passport.initialize());
 
 //import routes
@@ -26,16 +26,7 @@ const productRouter = require('./server/routes/products');
 const cartRouter = require('./server/routes/cart');
 
 //initialize routes
-if (process.env.NODE_ENV === 'production') {
-    // Exprees will serve up production assets
-    app.use(express.static('client/build'));
-  
-    // Express serve up index.html file if it doesn't recognize route
-    // const path = require('path');
-    // app.get('*', (req, res) => {
-    //   res.sendFile(path.resolve(__New-PERN, 'client', 'build', 'index.html'));
-    // });
-  }
+
 app.use('/auth', authRouter);
 app.use('/products', productRouter);
 app.use('/cart', cartRouter);
