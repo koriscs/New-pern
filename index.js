@@ -7,7 +7,6 @@ require('dotenv').config();
 const helmet = require('helmet');
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
-const path = require('path');
 
 //import passport middleware
 require('./server/middlewear/passport');
@@ -29,9 +28,6 @@ const productRouter = require('./server/routes/products');
 const cartRouter = require('./server/routes/cart');
 
 //initialize routes
-app.get('*', (req, res) => {
-    res.sendFile(path.join(publicPath, 'index.html'));
- });
 app.use('/auth', authRouter);
 app.use('/products', productRouter);
 app.use('/cart', cartRouter);
