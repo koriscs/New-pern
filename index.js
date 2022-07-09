@@ -9,7 +9,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
 
 //import passport middleware
-require('./server/middlewear/passport');
+require('./middlewear/passport');
 
 //initialize middlewears
 app.use(helmet());
@@ -21,9 +21,9 @@ app.options('*', cors(origin));
 app.use(passport.initialize());
 
 //import routes
-const authRouter = require('./server/routes/auth');
-const productRouter = require('./server/routes/products');
-const cartRouter = require('./server/routes/cart');
+const authRouter = require('./routes/auth');
+const productRouter = require('./routes/products');
+const cartRouter = require('./routes/cart');
 
 //initialize routes
 app.use('/auth', authRouter);
