@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 
 //import passport middleware
 require('./middlewear/passport');
-app.use(express.static(path.join(__dirname, "client/build")))
+
 //initialize middlewears
 app.use(helmet());
 app.use(express.json());
@@ -39,7 +39,9 @@ app.use('/auth', authRouter);
 app.use('/products', productRouter);
 app.use('/cart', cartRouter);
 
-
+app.get('*',(req, res) =>{
+    res.sendFile(path.join(__dirname,"client/build/index.html"));
+})
 const appStart = () => {
     try{
     app.listen(port, () =>{
