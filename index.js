@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const cors = require('cors')
 require('dotenv').config();
+const path = require('path');
 const helmet = require('helmet');
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
@@ -19,6 +20,13 @@ app.use(cookieParser());
 app.use(cors(origin = {origin:isProduction ? process.env.HEROKU_URL : process.env.CLIENT_URL, credentials: true }));
 app.options('*', cors(origin));
 app.use(passport.initialize());
+//server static content
+//npm run build 
+if (process.env.NODE_ENV === "production") {
+app.use(express.static(path.join(__dirname, "client/build")))
+   
+}
+
 
 //import routes
 const authRouter = require('./routes/auth');
@@ -40,12 +48,5 @@ const appStart = () => {
     console.log(`Error: ${error.message}`)
     } 
 }
-app.use((error, req, res, next) => {
-    res.status(error.status || 500).send({
-    error: {
-    status: error.status || 500,
-    message: error.message || 'Internal Server Error',
-    },
-  });
-  })
+
 appStart();
