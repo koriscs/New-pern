@@ -1,4 +1,6 @@
 require('dotenv').config();
+const isProduction = process.env.NODE_ENV === 'production';
+const baseURL = isProduction ? process.env.HEROKU_URL : process.env.SERVER_URL;
 
 module.exports = {
     PORT: process.env.PORT,
@@ -6,5 +8,6 @@ module.exports = {
     CLIENT_URL: process.env.CLIENT_URL,
     SECRET: process.env.SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    baseURL: baseURL
 }

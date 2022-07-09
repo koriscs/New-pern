@@ -1,9 +1,8 @@
 import axios from 'axios';
+import {baseURL} from '../conts/index';
 axios.defaults.withCredentials = true;
 
-require('dotenv').config();
-const isProduction = process.env.NODE_ENV === 'production';
-const baseURL = isProduction ? process.env.HEROKU_URL : process.env.SERVER_URL;
+
 
 export async function addItemToCart (body,id) {
     console.log("This is the body.id "+JSON.stringify(body))
