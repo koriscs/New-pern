@@ -5,7 +5,6 @@ const authRouter = Router();
 const { register, login, logout, account , loginGoogle} = require('../controllers/auth');
 const passport = require('passport');
 
-const REACT_URL = "http://localhost:3001/"
 
 authRouter.post('/register', registerValidations, validationMiddleware, register);
 authRouter.post('/login',loginValidation ,validationMiddleware, login);

@@ -41,7 +41,6 @@ export default function Product() {
           quantity: 1,
           size,
           sub_total:product.price,
-          id: userinfo.id,
           item_name: product.item_name,
           image_url: product.image_url}
         dispatch(addItemToCartRedux(data))
