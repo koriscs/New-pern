@@ -16,6 +16,7 @@ export default function Cart() {
       const {cartRedux } = useSelector(state =>state.cart);
       const [cart,setCart] = useState([]);
       const [loading, setLoading] = useState(true);
+      const [error,setError] = useState(false);
       const dispatch = useDispatch();
 
       const fetchCart = async () =>{
@@ -36,14 +37,22 @@ export default function Cart() {
             const results = await fetchCartItems(data);
             setCart(results.data);
             setLoading(false);
+            
           } else {
+
             const { data } = await fetchAccountInfo();
             const results = await fetchCartItems(data);
+
             setCart(results.data);
             setLoading(false);
+        
           }
         } catch (error) {
           console.log(error)
+          if(error.response.status === 404) {
+            setError(error.response.data.msg)
+            setLoading(false);
+          }
         }
       } else {
         
@@ -98,6 +107,7 @@ export default function Cart() {
   ) : (
     <Layout>
       <Container>
+        {error ? <h1>{error}</h1> : null}
         {cart.map((items,index) => {
           return (
             <Row key={index}>
