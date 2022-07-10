@@ -13,6 +13,15 @@ require('./middlewear/passport');
 
 //initialize middlewears
 app.use(helmet());
+app.use(
+    helmet.contentSecurityPolicy({
+      useDefaults: true,
+      directives: {
+        "script-src": ["'self'", "'unsafe-inline'", "example.com"],
+        "img-src": ["'self'", "https: data:"]
+      }
+    })
+  )
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
