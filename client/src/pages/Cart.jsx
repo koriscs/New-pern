@@ -78,8 +78,13 @@ export default function Cart() {
         if(isAuth) {
         const { data } = await fetchAccountInfo();
         item.id = data.id;
-        item.quantity = item.quantity-1;
-        await updateCartItem(item);
+        if(item.quantity === 1) {
+          return;
+        } else {
+          item.quantity = item.quantity-1;
+          await updateCartItem(item);
+        }
+       
         } else {
           dispatch(decreaseQuantity(item));
         }

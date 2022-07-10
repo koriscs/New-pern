@@ -29,8 +29,13 @@ export const cartSlice = createSlice({
         decreaseQuantity: (state,{payload}) =>{
             state.cartRedux = state.cartRedux.map(items =>{
                 if(items.product_id === payload.product_id && items.size === payload.size) {
-                   items.quantity = items.quantity-1;
-                   return items;
+                   if(items.quantity !== 1) {
+                    items.quantity = items.quantity-1;
+                    return items;
+                   } else {
+                    return items;
+                   }
+                   
                 }
                 return items;
             })

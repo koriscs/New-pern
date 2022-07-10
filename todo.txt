@@ -1,4 +1,1 @@
-handle error if no cart item logged in
-handle error if quantity less then 0 logged in
-handle error if quantity less then 0 logged out
 
