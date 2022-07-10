@@ -3,8 +3,10 @@ import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Card, Row, Container, Button} from 'react-bootstrap';
 import { getAllProducts } from '../api/products';
+import { onGoogleLogin } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { authenticateUser } from '../redux/slices/authSlice';
 
 
 export default function Home() {
@@ -12,7 +14,7 @@ export default function Home() {
   const [error, setError] = useState();
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const fetchProducts = async () =>{
   
     try{
@@ -23,10 +25,21 @@ export default function Home() {
       setError(error.response);
     }
   }
+  const getUser = async () =>{
+    try{
+    const response = await onGoogleLogin();
+   if (response.status === 200) {
+     dispatch(authenticateUser());
+   }
+  } catch (error) {
+    console.log(error.response);
+  }
+  }
 
   useEffect( () =>{
+      getUser();
       fetchProducts();
-  });
+  },[]);
   
   return (
     <Layout>

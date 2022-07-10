@@ -63,3 +63,39 @@ exports.addItemToCart = async (req, res) =>{
     }
     
 }
+
+exports.deleteCart = async (req, res) =>{
+    const cartId = parseInt(req.params.cartId); 
+
+    
+     let results = await pool.query('SELECT id, product_id FROM cart WHERE id = $1;', [cartId])
+         if(!results.rows.length) {
+             return res.status(404).json({msg: "We could not find a cart with this id!"})
+         } else {
+                 await pool.query('DELETE FROM cart WHERE id = $1;', [cartId])
+                 return res.status(200).json({msg:"Your cart was deleted"});
+             }
+}
+
+exports.updateCart = async (req, res) =>{
+    const cartId =req.params.cartId;
+    const { quantity } = req.body;
+
+    
+    let results = await pool.query('SELECT id, product_id FROM cart WHERE id = $1;', [cartId])
+        if(!results.rows.length) {
+            res.status(404).json({msg: "We couldn't find a cart with this id"});
+        } else {
+            const product_id = results.rows[0].product_id;
+            results = await pool.query('SELECT * FROM products WHERE id = $1', [product_id])
+                  const price = parseInt(results.rows[0].price);
+                 //console.log(price);
+    
+                const sub_total = quantity * price;
+                await pool.query('UPDATE cart SET quantity = $1, sub_total = $2  WHERE id = $3;', [quantity, sub_total, cartId])
+                res.status(200).json({msg: "The quantity was updated!"});
+                
+            }
+}
+        
+

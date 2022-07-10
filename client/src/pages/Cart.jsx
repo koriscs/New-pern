@@ -8,7 +8,6 @@ import { fetchCartItems , addItemToCart} from '../api/cart';
 import Image from 'react-bootstrap/Image';
 import { useSelector } from 'react-redux';
 import { persistor } from '../redux/store.js';
-//import { combineArrays } from '../utils/utils';
 
 export default function Cart() {
 
@@ -50,7 +49,7 @@ export default function Cart() {
 
       useEffect(() =>{
         fetchCart();
-      })
+      },[])
   return loading ? (
     <Layout>
     <div>Loading...</div>
@@ -64,13 +63,13 @@ export default function Cart() {
               <Col ><Image src={items.image_url} thumbnail={true}/></Col>
               <Col>{items.item_name}</Col>
               <Col>{items.size}</Col>
-              <Col>{items.quantity}</Col>
+              <Col><Button variant='secondary' >-</Button>{items.quantity}<Button variant='secondary' >+</Button></Col>
               <Col>{items.sub_total}</Col>
-              <Col><Button onClick={() =>{persistor.purge()}} >Purge</Button></Col>
+              <Col><Button variant='danger' >X</Button></Col>
             </Row>
           )
-        }) 
-}  
+        }) }  
+        <Col><Button onClick={() =>{persistor.purge()}} >Purge</Button></Col>
       </Container>
     </Layout>
   )
