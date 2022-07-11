@@ -86,12 +86,17 @@ exports.logout = async (req, res) =>{
 exports.postAddress = async (req, res) =>{
     const id = parseInt(req.params.customerId);
   
-   
-    const {zipcode, country, city, street_name, street_number, mobile_number} = req.body;
+    const results = await pool.query('SELECT * FROM address WHERE customer_id = $1',[id])
+    if(results.rows.length) {
+        res.status(404).json({msg: "Sorry there is already an address to this account pls update if you want!"})
+    } else {
+        const {zipcode, country, city, street_name, street_number, mobile_number} = req.body;
     
-    await pool.query('INSERT INTO address( customer_id, zipcode, country , city ,street_name , street_number, mobile_number) VALUES ($1, $2, $3, $4, $5, $6, $7);',
-                    [id, zipcode, country, city, street_name, street_number, mobile_number])
-                    res.status(201).json({msg: "Address infomrations sucesfully created"})
+        await pool.query('INSERT INTO address( customer_id, zipcode, country , city ,street_name , street_number, mobile_number) VALUES ($1, $2, $3, $4, $5, $6, $7);',
+                        [id, zipcode, country, city, street_name, street_number, mobile_number])
+                        res.status(201).json({msg: "Address infomrations sucesfully created"})
+    }
+    
 }  
 
 exports.getAddress = async (req, res) =>{

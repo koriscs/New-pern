@@ -38,7 +38,7 @@ export default function Address() {
     })
     } catch (error) {
         console.log(error);
-        setError(error.response.data.errors[0].msg);
+        setError(error.response.data.msg);
         setSuccess('');
     }
 }
