@@ -1,10 +1,12 @@
 const { Router } = require('express');
 const { validationMiddleware } = require('../middlewear/auth.middlewear');
-const { registerValidations ,loginValidation} = require('../validators/auth');
+const { registerValidations ,loginValidation, addressValidation} = require('../validators/auth');
 const authRouter = Router();
-const { register, login, logout, account , loginGoogle} = require('../controllers/auth');
+const { register, login, logout, account , loginGoogle, postAddress, getAddress} = require('../controllers/auth');
 const passport = require('passport');
 
+authRouter.post('/address',  passport.authenticate('jwt', {session: false}),addressValidation, validationMiddleware, postAddress);
+authRouter.get('/address', passport.authenticate('jwt', {session: false}), getAddress);
 
 authRouter.post('/register', registerValidations, validationMiddleware, register);
 authRouter.post('/login',loginValidation ,validationMiddleware, login);
@@ -25,7 +27,5 @@ authRouter.get('/google/success',passport.authenticate('jwt', {session: false}),
     return res.status(404).json({succes: false, message: "Sorry"});
   }
 })
-
-
 
 module.exports = authRouter;
