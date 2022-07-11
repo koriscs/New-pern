@@ -2,7 +2,8 @@ const pool = require('../database/index');
 const {hash } = require('bcryptjs');
 const { SECRET } = require('../const/index');
 const { sign } = require('jsonwebtoken')
-
+require('dotenv').config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
 exports.register = async (req, res) =>{
     const {email, password, firstname, lastname} = req.body;
@@ -120,6 +121,30 @@ exports.deleteAddress = async (req, res) =>{
     return res.status(200).json({msg:"Your address was deleted"});
     } catch(error) {
         console.log(error);
+    }
+}
+
+exports.stripePay = async (req, res) =>{
+    let {amount, id } = req.body;
+    try{
+        const payment = await stripe.paymentIntents.create({
+            amount,
+            currency: "USD",
+            description: "Clothes webshop",
+            payment_method: id,
+            confirm: true
+        })
+       // console.log("Payment", payment)
+        res.json({
+            message: "Payment successful",
+            success: true
+        })
+    } catch (error) {
+        console.log("error", error)
+        res.json({
+            message: "Payment failed",
+            success: false
+        })
     }
 }
 

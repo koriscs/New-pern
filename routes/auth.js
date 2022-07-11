@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { validationMiddleware } = require('../middlewear/auth.middlewear');
 const { registerValidations ,loginValidation, addressValidation} = require('../validators/auth');
 const authRouter = Router();
-const { register, login, logout, account , loginGoogle, postAddress, getAddress, deleteAddress} = require('../controllers/auth');
+const { register, login, logout, account , loginGoogle, postAddress, getAddress, deleteAddress, stripePay} = require('../controllers/auth');
 const passport = require('passport');
 
 authRouter.post('/address/:customerId',  passport.authenticate('jwt', {session: false}),addressValidation, validationMiddleware, postAddress);
@@ -28,5 +28,7 @@ authRouter.get('/google/success',passport.authenticate('jwt', {session: false}),
     return res.status(404).json({succes: false, message: "Sorry"});
   }
 })
+
+authRouter.post('/checkout', stripePay )
 
 module.exports = authRouter;

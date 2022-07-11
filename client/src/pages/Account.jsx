@@ -7,11 +7,13 @@ import { unauthenticateUser } from '../redux/slices/authSlice';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import StripeContainer from '../components/StripeContainer';
 
 export default function Account() {
 
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
+  const [checkout,setCheckout] = useState(false);
   /*
   const [userId, setUserId] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -57,6 +59,8 @@ export default function Account() {
         <button onClick={() => logout()} className='btn btn-primary'>
           Logout
         </button>
+        {checkout ? < StripeContainer/> : null}
+        <Button variant='secondary' onClick={() => setCheckout(true)} >Checkout</Button>
       </Layout>
     </div>
   )
