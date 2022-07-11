@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchAccountInfo , onLogout} from '../api/auth';
 import { unauthenticateUser } from '../redux/slices/authSlice';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
 
 export default function Account() {
 
@@ -50,7 +53,7 @@ export default function Account() {
         <h1>Account</h1>
         <h2>{`${userinfo.id} , ${userinfo.email}`}</h2>
 
-
+        <Link to='/account/address' ><Button>Give Address information</Button></Link>
         <button onClick={() => logout()} className='btn btn-primary'>
           Logout
         </button>

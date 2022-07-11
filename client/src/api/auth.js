@@ -26,13 +26,13 @@ export async function onGoogleLogin () {
     return await axios.get(`/auth/google/success`)
 }
 
-export async function addressInformation( addressForm) {
+export async function addressInformation(id,addressForm) {
     return await axios.post(
-        `/auth/address`,
+        `/auth/address/${id}`,
         addressForm
         )
 }
 
-export async function fetchAddressInfo () {
-    return await axios.get(`/auth/address`)
+export async function fetchAddressInfo (id) {
+    return await axios.get(`/auth/address/${id}`)
 }

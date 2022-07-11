@@ -2,11 +2,12 @@ const { Router } = require('express');
 const { validationMiddleware } = require('../middlewear/auth.middlewear');
 const { registerValidations ,loginValidation, addressValidation} = require('../validators/auth');
 const authRouter = Router();
-const { register, login, logout, account , loginGoogle, postAddress, getAddress} = require('../controllers/auth');
+const { register, login, logout, account , loginGoogle, postAddress, getAddress, deleteAddress} = require('../controllers/auth');
 const passport = require('passport');
 
-authRouter.post('/address',  passport.authenticate('jwt', {session: false}),addressValidation, validationMiddleware, postAddress);
-authRouter.get('/address', passport.authenticate('jwt', {session: false}), getAddress);
+authRouter.post('/address/:customerId',  passport.authenticate('jwt', {session: false}),addressValidation, validationMiddleware, postAddress);
+authRouter.get('/address/:customerId', passport.authenticate('jwt', {session: false}), getAddress);
+authRouter.delete('/address/:customerId',passport.authenticate('jwt', {session: false}), deleteAddress)
 
 authRouter.post('/register', registerValidations, validationMiddleware, register);
 authRouter.post('/login',loginValidation ,validationMiddleware, login);

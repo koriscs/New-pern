@@ -8,7 +8,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
-
+import Address from './pages/Address';
 
 
 const PrivateRoutes = () =>{
@@ -33,14 +33,15 @@ function App() {
       <Route path='/' element={<Home />} />
       <Route path='/cart' element={<Cart />} />
       <Route path='/product/:productId' element={<Product />} />
+
       <Route element={<PrivateRoutes />}>
         <Route path='/account' element={<Account />} />
+        <Route path='/account/address' element={<Address />} />
       </Route>
 
       <Route element={<OpenRoutes />}>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        
       </Route>
       
     </Routes>

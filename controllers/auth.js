@@ -84,11 +84,10 @@ exports.logout = async (req, res) =>{
     }
 }
 exports.postAddress = async (req, res) =>{
-    const id = parseInt(req.params.customer_id);
+    const id = parseInt(req.params.customerId);
   
    
     const {zipcode, country, city, street_name, street_number, mobile_number} = req.body;
-
     
     await pool.query('INSERT INTO address( customer_id, zipcode, country , city ,street_name , street_number, mobile_number) VALUES ($1, $2, $3, $4, $5, $6, $7);',
                     [id, zipcode, country, city, street_name, street_number, mobile_number])
@@ -96,7 +95,7 @@ exports.postAddress = async (req, res) =>{
 }  
 
 exports.getAddress = async (req, res) =>{
-    const id = parseInt(req.params.customer_id);
+    const id = parseInt(req.params.customerId);
   
     
 
@@ -107,4 +106,15 @@ exports.getAddress = async (req, res) =>{
         res.status(200).json(results.rows);
         }
     }
+exports.deleteAddress = async (req, res) =>{
+
+    const id = parseInt(req.params.customerId);
+
+    try{
+    await pool.query('DELETE FROM address WHERE customer_id = $1;',[id]);
+    return res.status(200).json({msg:"Your address was deleted"});
+    } catch(error) {
+        console.log(error);
+    }
+}
 
