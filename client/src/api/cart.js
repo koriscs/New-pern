@@ -18,3 +18,9 @@ export async function updateCartItem (body) {
     return await axios.put(`/cart/${body.id}/${body.cartid}`,
     body)
 }
+export async function checkOutCustomer (body) {
+    return await axios.get(`/cart/checkout/${body.id}`)
+}
+export async function getCustomersOrders (body) {
+    return await axios.get(`/cart/orders/${body.id}`)
+}

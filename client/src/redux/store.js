@@ -14,13 +14,13 @@ import {
 // Import Slices
 import cartSlice from './slices/cartSlice';
 import authSlice from './slices/authSlice';
-
+import usersSlice from './slices/usersSlice';
 const persistConfig = {
   key: 'auth',
   storage,
 }
 
-const reducers = combineReducers({auth: authSlice, cart: cartSlice})
+const reducers = combineReducers({auth: authSlice, cart: cartSlice, users: usersSlice})
 const persistedReducer = persistReducer(persistConfig, reducers)
 
 

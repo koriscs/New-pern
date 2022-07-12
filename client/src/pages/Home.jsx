@@ -3,16 +3,16 @@ import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Card, Row, Container, Button} from 'react-bootstrap';
 import { getAllProducts } from '../api/products';
-import { onGoogleLogin } from '../api/auth';
+import { fetchAccountInfo, onGoogleLogin } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../redux/slices/authSlice';
+import { addAccountInfo } from '../redux/slices/usersSlice';
 
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fetchProducts = async () =>{
@@ -35,9 +35,14 @@ export default function Home() {
     console.log(error.response);
   }
   }
+  const fetchUserInfo = async() =>{
+    const { data } = await fetchAccountInfo();
+    dispatch(addAccountInfo(data));
+  }
 
   useEffect( () =>{
       getUser();
+      fetchUserInfo();
       fetchProducts();
   },[]);
   

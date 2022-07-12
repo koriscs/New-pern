@@ -1,29 +1,30 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { fetchAccountInfo , onLogout} from '../api/auth';
+import {  onLogout} from '../api/auth';
 import { unauthenticateUser } from '../redux/slices/authSlice';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import StripeContainer from '../components/StripeContainer';
+import { deleteAccountInfo } from '../redux/slices/usersSlice';
+import { getCustomersOrders } from '../api/cart';
 
 export default function Account() {
 
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
   const [checkout,setCheckout] = useState(false);
-  /*
-  const [userId, setUserId] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-*/
-  const [userinfo, setUserinfo] = useState({});
+  const [orders, setOrders] = useState();
+  const { user } = useSelector(state=> state.users)
+
   const logout = async () => {
     try {
       await onLogout()
 
-      dispatch(unauthenticateUser())
+      dispatch(unauthenticateUser());
+      dispatch(deleteAccountInfo({}));
     } catch (error) {
       console.log(error.response)
     }
@@ -31,19 +32,25 @@ export default function Account() {
 
   const accountInfo = async () => {
     try {
-      const { data } = await fetchAccountInfo()
       
-      setUserinfo(data);
       setLoading(false)
       
     } catch (error) {
       logout()
     }
   }
+  const getOrders = async () =>{
+    try{
+      const results = await getCustomersOrders(user);
+      setOrders(results.data);
+    }catch (error) {
 
+    }
+  }
   useEffect(() => {
-    accountInfo()
-  })
+    accountInfo();
+    getOrders();
+  },[orders, dispatch, user])
 
   return  loading ? (
      <Layout>
@@ -53,7 +60,7 @@ export default function Account() {
     <div>
       <Layout>
         <h1>Account</h1>
-        <h2>{`${userinfo.id} , ${userinfo.email}`}</h2>
+        <h2>{`${user.id} , ${user.email}`}</h2>
 
         <Link to='/account/address' ><Button>Give Address information</Button></Link>
         <button onClick={() => logout()} className='btn btn-primary'>
@@ -61,6 +68,15 @@ export default function Account() {
         </button>
         {checkout ? < StripeContainer/> : null}
         <Button variant='secondary' onClick={() => setCheckout(true)} >Checkout</Button>
+        {orders ? orders.map(orders =>{
+          return (
+            <div>
+            <p>{orders.customer_address}</p>
+            <p>{orders.date_of_purchase}</p>
+            <p>{orders.total_price}</p>
+            </div>
+          )
+        }): <h2>No orders yet!</h2>}
       </Layout>
     </div>
   )

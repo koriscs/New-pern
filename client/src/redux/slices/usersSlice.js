@@ -5,19 +5,22 @@ const initialState = {
     address: {}
 }
 
-export const userSlice = createSlice({
+export const usersSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        getAccountInfo: (state, {payload}) =>{
+        addAccountInfo: (state, {payload}) =>{
             state.user = payload;
         },
-        getAddressInfo: (state, {payload}) =>{
+        addAddressInfo: (state, {payload}) =>{
             state.address = payload;
+        },
+        deleteAccountInfo: (state, {payload}) =>{
+            state.user = payload;
         }
     },
 })
 
-export const {getAccountInfo, getAddressInfo} = authSlice.actions;
+export const {addAccountInfo, addAddressInfo, deleteAccountInfo} = usersSlice.actions;
 
-export default authSlice.reducer;
+export default usersSlice.reducer;

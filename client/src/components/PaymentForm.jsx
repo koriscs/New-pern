@@ -1,6 +1,8 @@
 import React , {useState} from 'react'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import axios from 'axios';
+import { checkOutCustomer } from '../api/cart';
+import { useSelector } from 'react-redux';
 
 const CARD_OPTIONS = {
     iconStyle: "solid",
@@ -27,7 +29,7 @@ export default function PaymentForm() {
     const [succes, setSucces] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
-
+    const { user } = useSelector(state=> state.users)
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
@@ -45,6 +47,13 @@ export default function PaymentForm() {
                 id
             })
             if(response.data.success) {
+                console.log(response);
+                try{
+                  const results =  await checkOutCustomer(user);
+                  console.log(results.data.msg);
+                }catch(error){
+                    console.log(error)
+                }
                 console.log("Successfull payment")
                 setSucces(true)
             }

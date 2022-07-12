@@ -7,8 +7,8 @@ cartRouter.get('/:customerId',  passport.authenticate('jwt', {session: false}), 
 cartRouter.post('/:customerId', passport.authenticate('jwt', {session: false}), addItemToCart)
 cartRouter.delete('/:customerId/:cartId', passport.authenticate('jwt', {session: false}), deleteCart)
 cartRouter.put('/:customerId/:cartId',passport.authenticate('jwt', {session: false}), updateCart)
-cartRouter.get('/checkout/:customerId', checkOut);
-cartRouter.get('/orders/:customerId', getCustomersOrders);
+cartRouter.get('/checkout/:customerId', passport.authenticate('jwt', {session: false}), checkOut);
+cartRouter.get('/orders/:customerId', passport.authenticate('jwt', {session: false}), getCustomersOrders);
 
 
 module.exports = cartRouter;

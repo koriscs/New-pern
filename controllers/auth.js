@@ -3,7 +3,7 @@ const {hash } = require('bcryptjs');
 const { SECRET } = require('../const/index');
 const { sign } = require('jsonwebtoken')
 require('dotenv').config();
-const stripe = require("stripe")(process.env.STRIPE_SECRET)
+const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET)
 
 exports.register = async (req, res) =>{
     const {email, password, firstname, lastname} = req.body;
