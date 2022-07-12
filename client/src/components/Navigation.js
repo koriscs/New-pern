@@ -1,12 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Navbar } from 'react-bootstrap';
 
 export default function Navigation() {
     const { isAuth } = useSelector(state=> state.auth)
 
   return (
-    <nav className='navbar navbar-light bg-light'>
+    <Navbar className='navbar navbar-light bg-light'>
     <div className='container'>
       <div>
         <NavLink to='/'>
@@ -35,6 +36,6 @@ export default function Navigation() {
         </div>
       )}
     </div>
-  </nav>
+  </Navbar>
   )
 }
