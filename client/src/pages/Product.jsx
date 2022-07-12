@@ -12,19 +12,20 @@ import { fetchAccountInfo } from '../api/auth';
 import { addItemToCart } from '../api/cart';
 import { fetchCartItems } from '../api/cart';
 import { setItemCount,deleteReduxCart } from '../redux/slices/cartSlice';
+import { useRef } from 'react';
 
 export default function Product() {
     let { productId } = useParams();
     const [product, setProduct] = useState();
     const [loading, setLoading] = useState(true);
     const [size, setSize] = useState('');
-    const [userinfo, setUserinfo] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isAuth } = useSelector(state=> state.auth);
     const { user } = useSelector(state=> state.users);
     const {cartRedux } = useSelector(state =>state.cart);
     const [cart,setCart] = useState([]);
+    const firstTimeRender = useRef(true);
 
     const fetchCart = async () =>{
 
@@ -74,7 +75,7 @@ export default function Product() {
         addItemToCart({product_id:product.id,
           quantity: 1,
           size,
-          id: userinfo.id})
+          id: user.id})
       } else {
         let data ={product_id:product.id,
           quantity: 1,
@@ -90,27 +91,21 @@ export default function Product() {
       console.log("This is the event target"+e.target.value)
       setSize(e.target.value);
     } 
-    const accountInfo = async () => {
-      try {
-        const { data } = await fetchAccountInfo()
-        
-        setUserinfo(data);
-        
-      } catch (error) {
-        console.log(error);
-        }
-    }
 
 
     useEffect(() =>{
         getProduct();
-        accountInfo();
         fetchCart();
-  },[]);
+  },[cart, addProduct]);
 
   useEffect(() =>{
+    if(!firstTimeRender.current) {
     dispatch(setItemCount(cart.length));
-  },[cart]);
+    }
+  },[cart,addProduct]);
+  useEffect(() =>{
+    firstTimeRender.current = false;
+  },[]);
 
   return !loading ? (
     <Layout>

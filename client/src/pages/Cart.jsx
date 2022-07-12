@@ -8,6 +8,7 @@ import Image from 'react-bootstrap/Image';
 import { useSelector, useDispatch } from 'react-redux';
 import { persistor } from '../redux/store.js';
 import { setItemCount,deleteReduxCart, deleteItemFromRedux, increaseQuantity, decreaseQuantity } from '../redux/slices/cartSlice';
+import { useRef } from 'react';
 
 export default function Cart() {
 
@@ -18,7 +19,9 @@ export default function Cart() {
       const [error,setError] = useState(false);
       const dispatch = useDispatch();
       const { user } = useSelector(state=> state.users);
-      
+      const firstTimeRender = useRef(true);
+
+
       const fetchCart = async () =>{
 
         if(isAuth === true) {
@@ -104,8 +107,13 @@ export default function Cart() {
       },[handleDecrease, handleIncrease, handleDelete,dispatch])
 
       useEffect(() =>{
+        if(!firstTimeRender.current) {
         dispatch(setItemCount(cart.length));
+        }
       },[cart]);
+      useEffect(() =>{
+        firstTimeRender.current = false;
+      },[]);
     
 
   return loading ? (
