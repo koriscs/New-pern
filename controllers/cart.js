@@ -57,6 +57,7 @@ exports.addItemToCart = async (req, res) =>{
 
 exports.deleteCart = async (req, res) =>{
     const cartId = parseInt(req.params.cartId); 
+    const id = parseInt(req.params.customerId);
 
     
      let results = await pool.query('SELECT id, product_id FROM cart WHERE id = $1;', [cartId])
@@ -64,7 +65,9 @@ exports.deleteCart = async (req, res) =>{
              return res.status(404).json({msg: "We could not find a cart with this id!"})
          } else {
                  await pool.query('DELETE FROM cart WHERE id = $1;', [cartId])
-                 return res.status(200).json({msg:"Your cart was deleted"});
+                 results = await pool.query('SELECT * FROM cart WHERE customer_id=$1',[id])
+                 console.log(results.rows);
+                 return res.status(200).json({msg:"Your cart was deleted",results});
              }
 }
 

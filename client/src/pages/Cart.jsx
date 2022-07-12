@@ -3,12 +3,11 @@ import { useState, useEffect } from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { fetchAccountInfo } from '../api/auth';
 import { fetchCartItems , addItemToCart, deleteCart, updateCartItem} from '../api/cart';
 import Image from 'react-bootstrap/Image';
 import { useSelector, useDispatch } from 'react-redux';
 import { persistor } from '../redux/store.js';
-import { deleteReduxCart, deleteItemFromRedux, increaseQuantity, decreaseQuantity } from '../redux/slices/cartSlice';
+import { setItemCount,deleteReduxCart, deleteItemFromRedux, increaseQuantity, decreaseQuantity } from '../redux/slices/cartSlice';
 
 export default function Cart() {
 
@@ -18,37 +17,35 @@ export default function Cart() {
       const [loading, setLoading] = useState(true);
       const [error,setError] = useState(false);
       const dispatch = useDispatch();
-
+      const { user } = useSelector(state=> state.users);
+      
       const fetchCart = async () =>{
 
         if(isAuth === true) {
         try {
           if(cartRedux.length) {
-            const { data } = await fetchAccountInfo();
             
             await cartRedux.map(products => {
-              const newObj = Object.assign({id:data.id}, products);
+              const newObj = Object.assign({id:user.id}, products);
               console.log(JSON.stringify(newObj));
-              return addItemToCart(newObj)
+              return addItemToCart(newObj);
             });
 
             dispatch(deleteReduxCart([]));
 
-            const results = await fetchCartItems(data);
+            const results = await fetchCartItems(user);
             setCart(results.data);
             setLoading(false);
             
           } else {
 
-            const { data } = await fetchAccountInfo();
-            const results = await fetchCartItems(data);
+            const results = await fetchCartItems(user);
 
             setCart(results.data);
             setLoading(false);
         
           }
         } catch (error) {
-          console.log(error)
           if(error.response.status === 404) {
             setError(error.response.data.msg)
             setLoading(false);
@@ -59,15 +56,17 @@ export default function Cart() {
         setCart(cartRedux);
         setLoading(false);
       }
-      }
       
+      }
       const handleDelete = async (e,item) =>{
         e.preventDefault();
         if (isAuth) {
         console.log(JSON.stringify(item));
-        const { data } = await fetchAccountInfo();
-        item.id = data.id;
-        await deleteCart(item);
+        item.id = user.id;
+         const results = await deleteCart(item);
+         if (!results.data.results.rows.length) {
+          dispatch(setItemCount(0));
+         }
         } else {
           dispatch(deleteItemFromRedux(item));
         }
@@ -76,8 +75,7 @@ export default function Cart() {
         e.preventDefault();
         
         if(isAuth) {
-        const { data } = await fetchAccountInfo();
-        item.id = data.id;
+        item.id = user.id;
         if(item.quantity === 1) {
           return;
         } else {
@@ -92,8 +90,7 @@ export default function Cart() {
       const handleIncrease = async (e, item) =>{
         e.preventDefault();
         if(isAuth) {
-        const { data } = await fetchAccountInfo();
-        item.id = data.id;
+        item.id = user.id;
         item.quantity = item.quantity+1;
       
         await updateCartItem(item);
@@ -104,7 +101,13 @@ export default function Cart() {
 
       useEffect(() =>{
         fetchCart();
-      },[handleDecrease, handleIncrease, handleDelete])
+      },[handleDecrease, handleIncrease, handleDelete,dispatch])
+
+      useEffect(() =>{
+        dispatch(setItemCount(cart.length));
+      },[cart]);
+    
+
   return loading ? (
     <Layout>
     <div>Loading...</div>
@@ -112,8 +115,7 @@ export default function Cart() {
   ) : (
     <Layout>
       <Container>
-        {error ? <h1>{error}</h1> : null}
-        {cart.map((items,index) => {
+        {error ? <h1>{error}</h1> :cart.map((items,index) => {
           return (
             <Row key={index}>
               <Col ><Image src={items.image_url} thumbnail={true}/></Col>
@@ -124,7 +126,7 @@ export default function Cart() {
               <Col><Button variant='danger' onClick={(e) => handleDelete(e,items) } >X</Button></Col>
             </Row>
           )
-        }) }  
+        }) }
         <Col><Button onClick={() =>{persistor.purge()}} >Purge</Button></Col>
       </Container>
     </Layout>

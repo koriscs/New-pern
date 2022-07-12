@@ -15,6 +15,7 @@ export default function Home() {
   const [error, setError] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const fetchProducts = async () =>{
   
     try{

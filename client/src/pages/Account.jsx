@@ -2,13 +2,13 @@ import React from 'react';
 import Layout from '../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import {  onLogout} from '../api/auth';
+import {  onLogout, fetchAccountInfo} from '../api/auth';
 import { unauthenticateUser } from '../redux/slices/authSlice';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import StripeContainer from '../components/StripeContainer';
-import { deleteAccountInfo } from '../redux/slices/usersSlice';
+import { addAccountInfo, deleteAccountInfo } from '../redux/slices/usersSlice';
 import { getCustomersOrders } from '../api/cart';
 
 export default function Account() {
@@ -32,7 +32,8 @@ export default function Account() {
 
   const accountInfo = async () => {
     try {
-      
+      const { data } = await fetchAccountInfo();
+      dispatch(addAccountInfo(data));
       setLoading(false)
       
     } catch (error) {
@@ -44,7 +45,7 @@ export default function Account() {
       const results = await getCustomersOrders(user);
       setOrders(results.data);
     }catch (error) {
-
+      console.log(error);
     }
   }
   useEffect(() => {
@@ -68,9 +69,9 @@ export default function Account() {
         </button>
         {checkout ? < StripeContainer/> : null}
         <Button variant='secondary' onClick={() => setCheckout(true)} >Checkout</Button>
-        {orders ? orders.map(orders =>{
+        {orders ? orders.map((orders, index) =>{
           return (
-            <div>
+            <div key={index}>
             <p>{orders.customer_address}</p>
             <p>{orders.date_of_purchase}</p>
             <p>{orders.total_price}</p>
