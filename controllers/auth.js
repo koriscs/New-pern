@@ -43,6 +43,7 @@ exports.login = async (req, res) =>{
 }
 
 exports.account = async (req, res) =>{
+    
     try {
         return res.status(200).json({
             id: req.user.id,
@@ -50,7 +51,8 @@ exports.account = async (req, res) =>{
         })
     } catch( error) {
         console.log(error.message)
-    }
+        }
+    
 }
 
 exports.logout = async (req, res) =>{

@@ -91,3 +91,52 @@ exports.updateCart = async (req, res) =>{
 }
         
 
+exports.checkOut = async (req, res) =>{
+    const id = parseInt(req.params.customerId);
+
+   
+     let results = await pool.query('SELECT * FROM cart WHERE customer_id = $1;', [id])
+        if(!results.rows.length) {
+            res.status(404).json({msg: "There is no cart with this customer_ID to checkout!"})
+        } else {
+           const order_array = results.rows;
+
+           results = await pool.query('SELECT * FROM address WHERE customer_id = $1', [id])
+                if(!results.rows.length) {
+                    return res.status(404).json({msg: "There is no address information for this user pls give address information for the user first!"});
+                } else {
+                const addressObject = results.rows[0];
+                const address = `${addressObject.zipcode}, ${addressObject.country} ${addressObject.city} ${addressObject.street_name} ${addressObject.street_number}.`;
+
+                results = await pool.query('SELECT SUM(sub_total) as total_price FROM cart WHERE customer_id = $1;', [id])
+                    const total_price = results.rows[0].total_price;
+
+                    results = await pool.query('INSERT INTO orders (customer_id, customer_address, total_price) VALUES ($1, $2, $3) RETURNING id;', [id, address, total_price])
+                        const order_id = results.rows[0].id;
+
+                         order_array.forEach(order_item =>{
+                             pool.query('INSERT INTO order_details (order_id, product_size, product_quantity, product_id) VALUES ($1, $2, $3, $4);',
+                              [order_id, order_item.size, order_item.quantity, order_item.product_id])
+                        })
+                        await pool.query('DELETE FROM cart WHERE customer_id = $1;', [id])
+                        res.status(200).json({msg:"Your order was sucesfully added!"})                        
+                    
+                
+              }
+                
+              
+        }
+    
+     
+}
+exports.getCustomersOrders =  async (req, res) =>{
+    const id = req.params.customerId;
+
+    const results = await pool.query('SELECT * FROM orders WHERE customer_id = $1;', [id])
+        if(!results.rows.length) {
+            return res.status(404).json({msg: "There is no order placed for this customer!"});
+        } else {
+           return res.status(200).json(results.rows);
+        }
+
+}
