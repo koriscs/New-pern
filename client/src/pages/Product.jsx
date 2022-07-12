@@ -10,6 +10,8 @@ import { addItemToCartRedux } from '../redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccountInfo } from '../api/auth';
 import { addItemToCart } from '../api/cart';
+import { fetchCartItems } from '../api/cart';
+import { setItemCount,deleteReduxCart } from '../redux/slices/cartSlice';
 
 export default function Product() {
     let { productId } = useParams();
@@ -20,6 +22,43 @@ export default function Product() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isAuth } = useSelector(state=> state.auth);
+    const { user } = useSelector(state=> state.users);
+    const {cartRedux } = useSelector(state =>state.cart);
+    const [cart,setCart] = useState([]);
+
+    const fetchCart = async () =>{
+
+      if(isAuth === true) {
+      try {
+        if(cartRedux.length) {
+          
+          await cartRedux.map(products => {
+            const newObj = Object.assign({id:user.id}, products);
+            console.log(JSON.stringify(newObj));
+            return addItemToCart(newObj);
+          });
+
+          dispatch(deleteReduxCart([]));
+
+          const results = await fetchCartItems(user);
+          setCart(results.data);
+          
+        } else {
+
+          const results = await fetchCartItems(user);
+
+          setCart(results.data);
+      
+        }
+      } catch (error) {
+        console.log(error);
+        }
+    } else {
+      
+      setCart(cartRedux);
+    }
+    
+    }
 
     const getProduct = async () =>{
         try{
@@ -66,7 +105,12 @@ export default function Product() {
     useEffect(() =>{
         getProduct();
         accountInfo();
-  },[])
+        fetchCart();
+  },[]);
+
+  useEffect(() =>{
+    dispatch(setItemCount(cart.length));
+  },[cart]);
 
   return !loading ? (
     <Layout>
