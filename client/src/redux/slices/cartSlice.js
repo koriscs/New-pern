@@ -21,32 +21,19 @@ export const cartSlice = createSlice({
         deleteItemFromRedux: (state, action) =>{
             state.cartRedux = state.cartRedux.filter(items => !(items.product_id === action.payload.product_id && items.size === action.payload.size));
         },
-        increaseQuantity: (state,{payload}) =>{
+        updateQuantity: (state,{payload}) =>{
             state.cartRedux = state.cartRedux.map(items =>{
                 if(items.product_id === payload.product_id && items.size === payload.size) {
-                   items.quantity = items.quantity+1;
+                   items.quantity = payload.quantity;
                    return items;
                 }
                 return items;
             })
         },
-        decreaseQuantity: (state,{payload}) =>{
-            state.cartRedux = state.cartRedux.map(items =>{
-                if(items.product_id === payload.product_id && items.size === payload.size) {
-                   if(items.quantity !== 1) {
-                    items.quantity = items.quantity-1;
-                    return items;
-                   } else {
-                    return items;
-                   }
-                   
-                }
-                return items;
-            })
-        }
+       
     },
 })
 
-export const { setItemCount, addItemToCartRedux, deleteReduxCart, deleteItemFromRedux, increaseQuantity, decreaseQuantity } = cartSlice.actions;
+export const { setItemCount, addItemToCartRedux, deleteReduxCart, deleteItemFromRedux, updateQuantity} = cartSlice.actions;
 
 export default cartSlice.reducer;

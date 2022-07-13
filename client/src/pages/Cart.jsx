@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { fetchCartItems , addItemToCart, deleteCart, updateCartItem} from '../api/cart';
 import Image from 'react-bootstrap/Image';
 import { useSelector, useDispatch } from 'react-redux';
-import { setItemCount,deleteReduxCart, deleteItemFromRedux, increaseQuantity, decreaseQuantity } from '../redux/slices/cartSlice';
+import { setItemCount,deleteReduxCart, deleteItemFromRedux, updateQuantity} from '../redux/slices/cartSlice';
 import { useRef } from 'react';
 import '../styles/Cart.css';
 
@@ -20,7 +20,6 @@ export default function Cart() {
       const dispatch = useDispatch();
       const { user } = useSelector(state=> state.users);
       const firstTimeRender = useRef(true);
-
 
       const fetchCart = async () =>{
 
@@ -74,37 +73,23 @@ export default function Cart() {
           dispatch(deleteItemFromRedux(item));
         }
       }
-      const handleDecrease = async (e, item) =>{
+      const handleUpdate = async (e, item) =>{
         e.preventDefault();
-        
+        item = {...item, quantity:e.target.value}
         if(isAuth) {
-        item.id = user.id;
-        if(item.quantity === 1) {
-          return;
-        } else {
-          item.quantity = item.quantity-1;
+          item.id = user.id;
           await updateCartItem(item);
-        }
-       
         } else {
-          dispatch(decreaseQuantity(item));
+          console.log("Event target"+e.target.value);
+          console.log(JSON.stringify(item));
+          dispatch(updateQuantity(item));
         }
       }
-      const handleIncrease = async (e, item) =>{
-        e.preventDefault();
-        if(isAuth) {
-        item.id = user.id;
-        item.quantity = item.quantity+1;
-      
-        await updateCartItem(item);
-      } else {
-        dispatch(increaseQuantity(item))
-      }
-      }
+ 
 
       useEffect(() =>{
         fetchCart();
-      },[handleDecrease, handleIncrease, handleDelete,dispatch])
+      },[ handleDelete, handleUpdate])
 
       useEffect(() =>{
         if(!firstTimeRender.current) {
@@ -129,7 +114,20 @@ export default function Cart() {
               <Col className='col-2' ><Image src={items.image_url} thumbnail={true}/></Col>
               <Col className='col-3'>{items.item_name}</Col>
               <Col className='col-1'>{items.size}</Col>
-              <Col className='col-3'><Button variant='secondary' onClick={(e) => handleDecrease(e,items) }>-</Button>{items.quantity}<Button variant='secondary' onClick={(e) => handleIncrease(e,items) } >+</Button></Col>
+              <Col className='col-3'>
+                <select className="m-2 border border-solid" value={items.quantity} onChange={(e)=>handleUpdate(e, items)}>
+                    <option value='1'>1</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
+                    <option value='6'>6</option>
+                    <option value='7'>7</option>
+                    <option value='8'>8</option>
+                    <option value='9'>9</option>
+                    <option value='10'>10</option>
+                </select>
+              </Col>
               <Col className='col-2'>{items.sub_total}</Col>
               <Col className='col-1'><Button variant='danger' onClick={(e) => handleDelete(e,items) } >x</Button></Col>
             </Row>

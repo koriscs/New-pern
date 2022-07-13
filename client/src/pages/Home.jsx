@@ -12,6 +12,7 @@ import '../styles/Home.css';
 import { setItemCount,deleteReduxCart } from '../redux/slices/cartSlice';
 import { addItemToCart } from '../api/cart';
 import { fetchCartItems } from '../api/cart';
+import { persistor } from '../redux/store.js';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -122,6 +123,7 @@ export default function Home() {
     })}
       </Row>
     </Container>
+    <Button onClick={() =>{persistor.purge()}} >Purge</Button>
     </Layout>
   )
 }
