@@ -1,0 +1,21 @@
+.card {
+    margin: auto;
+    margin-bottom: 20px;
+}
+.product-container {
+    background-color: rgba(128, 128, 128, 0.13);
+    border-radius: 20px;
+    max-width: 720px;
+
+}
+.btn-outline-success {
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.btn-danger {
+    max-width: 200px;
+    margin: auto !important;
+    left: 50%;
+    justify-self: center;
+}

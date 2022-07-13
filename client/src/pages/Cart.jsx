@@ -135,7 +135,6 @@ export default function Cart() {
             </Row>
           )
         }) }
-        <Col><Button onClick={() =>{persistor.purge()}} >Purge</Button></Col>
       </Container>
     </Layout>
   )

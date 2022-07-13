@@ -1,21 +1,63 @@
-import React , {useState, useEffect }from 'react'
+import React ,{ useRef ,useState, useEffect}from 'react'
 import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Card, Row, Container, Button} from 'react-bootstrap';
 import { getAllProducts } from '../api/products';
 import { fetchAccountInfo, onGoogleLogin } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { authenticateUser } from '../redux/slices/authSlice';
 import { addAccountInfo } from '../redux/slices/usersSlice';
 import '../styles/Home.css';
+import { setItemCount,deleteReduxCart } from '../redux/slices/cartSlice';
+import { addItemToCart } from '../api/cart';
+import { fetchCartItems } from '../api/cart';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isAuth } = useSelector(state=> state.auth);
+  const { user } = useSelector(state=> state.users);
+  const {cartRedux } = useSelector(state =>state.cart);
+  const [cart,setCart] = useState([]);
+  const firstTimeRender = useRef(true);
   
+  const fetchCart = async () =>{
+
+    if(isAuth === true) {
+    try {
+      if(cartRedux.length) {
+        
+        await cartRedux.map(products => {
+          const newObj = Object.assign({id:user.id}, products);
+          console.log(JSON.stringify(newObj));
+          return addItemToCart(newObj);
+        });
+
+        dispatch(deleteReduxCart([]));
+
+        const results = await fetchCartItems(user);
+        setCart(results.data);
+        
+      } else {
+
+        const results = await fetchCartItems(user);
+
+        setCart(results.data);
+    
+      }
+    } catch (error) {
+      console.log(error);
+      }
+  } else {
+    
+    setCart(cartRedux);
+  }
+  
+  }
+
   const fetchProducts = async () =>{
   
     try{
@@ -45,6 +87,15 @@ export default function Home() {
       getUser();
       fetchUserInfo();
       fetchProducts();
+      fetchCart();
+  },[]);
+  useEffect(() =>{
+    if(!firstTimeRender.current) {
+    dispatch(setItemCount(cart.length));
+    }
+  },[cart]);
+  useEffect(() =>{
+    firstTimeRender.current = false;
   },[]);
   
   return (

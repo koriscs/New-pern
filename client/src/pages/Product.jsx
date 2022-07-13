@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Container, Card, Button, Form } from 'react-bootstrap';
@@ -8,11 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Layout from '../components/Layout';
 import { addItemToCartRedux } from '../redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAccountInfo } from '../api/auth';
 import { addItemToCart } from '../api/cart';
 import { fetchCartItems } from '../api/cart';
 import { setItemCount,deleteReduxCart } from '../redux/slices/cartSlice';
-import { useRef } from 'react';
+import '../styles/Product.css';
 
 export default function Product() {
     let { productId } = useParams();
@@ -85,6 +84,7 @@ export default function Product() {
           image_url: product.image_url}
         dispatch(addItemToCartRedux(data))
       }
+      navigate(`/`);
     }
     const sizeChange = (e) =>{
       e.preventDefault();
@@ -109,7 +109,7 @@ export default function Product() {
 
   return !loading ? (
     <Layout>
-    <Container>
+    <Container className='product-container' >
         <Card style={{maxWidth: '22rem'}}  >
           <Card.Img src={product.image_url} />
             <Card.Body>
@@ -117,12 +117,12 @@ export default function Product() {
               <Card.Text>{product.description}</Card.Text>
             </Card.Body>
               <Form onChange={sizeChange}>
-                <Form.Label>Size's</Form.Label>
+                <Form.Label>Size's: </Form.Label>
                 <Form.Check inline label='S' name="size"  value="S" id='S' type='radio' />
                 <Form.Check inline label='M' name="size"  value="M" id='M' type='radio' />
                 <Form.Check inline label='L' name="size"  value="L" id='L' type='radio' />
               </Form>
-            <Button variant='success' onClick={addProduct} >Add to Cart</Button>
+            <Button variant='outline-success' onClick={addProduct} >Add to Cart</Button>
           <Card.Footer>{product.price+"Ft"}</Card.Footer>
         </Card>
          <Button variant='danger' onClick={() =>{navigate(-1)}} >Go back</Button>
