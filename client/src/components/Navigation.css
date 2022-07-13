@@ -1,6 +1,19 @@
 a.active {
-    color: purple;
+    background-color: rgba(128, 128, 128, 0.253);
+    border-radius: 10px;
+    padding: 5px;
 }
-.navbar-brand .active {
-    color: blueviolet;
+.navbar-item {
+    font-size: large;
+    font-family: 'Nova Mono', monospace;
+    border-radius: 15px;
+    font-weight: bold;
 }
+.cart {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}   
+.cart-container {
+    margin-left: 10px;
+}
+

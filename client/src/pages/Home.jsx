@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../redux/slices/authSlice';
 import { addAccountInfo } from '../redux/slices/usersSlice';
-
+import '../styles/Home.css';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -52,17 +52,17 @@ export default function Home() {
 
 <div style={{ color: 'red', margin: '10px 0' }}>{error}</div>
 
-       <Container>
+       <Container className='main-container'>
       <Row>
       {products.map((items, index)=>{
       return (
-          <Card style={{maxWidth: '22rem'}} key={index} >
-          <Card.Img src={items.image_url} />
+          <Card style={{maxWidth: '22rem'}} key={index} className='card' >
+          <Card.Img src={items.image_url} className='card-image' />
             <Card.Body>
               <Card.Title>{items.item_name}</Card.Title>
               <Card.Text>{items.description}</Card.Text>
             </Card.Body>
-            <Button onClick={() =>{
+            <Button variant='outline-info' className='card-button' onClick={() =>{
               navigate(`/product/${items.id}`)
             }} >Show Details</Button>
           <Card.Footer>{items.price+"Ft"}</Card.Footer>
