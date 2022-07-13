@@ -79,6 +79,7 @@ export default function Product() {
         let data ={product_id:product.id,
           quantity: 1,
           size,
+          price:product.price,
           sub_total:product.price,
           item_name: product.item_name,
           image_url: product.image_url}

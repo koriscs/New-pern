@@ -42,8 +42,10 @@ export default function Account() {
   }
   const getOrders = async () =>{
     try{
+      if(user) {
       const results = await getCustomersOrders(user);
       setOrders(results.data);
+      }
     }catch (error) {
       console.log(error);
     }
@@ -51,7 +53,7 @@ export default function Account() {
   useEffect(() => {
     accountInfo();
     getOrders();
-  },[orders, dispatch, user])
+  },[orders, user])
 
   return  loading ? (
      <Layout>
