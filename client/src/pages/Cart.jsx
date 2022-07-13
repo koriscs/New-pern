@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { fetchCartItems , addItemToCart, deleteCart, updateCartItem} from '../api/cart';
 import Image from 'react-bootstrap/Image';
 import { useSelector, useDispatch } from 'react-redux';
-import { persistor } from '../redux/store.js';
 import { setItemCount,deleteReduxCart, deleteItemFromRedux, increaseQuantity, decreaseQuantity } from '../redux/slices/cartSlice';
 import { useRef } from 'react';
+import '../styles/Cart.css';
 
 export default function Cart() {
 
@@ -122,16 +122,16 @@ export default function Cart() {
     </Layout>
   ) : (
     <Layout>
-      <Container>
+      <Container className='cart-container' >
         {error ? <h1>{error}</h1> :cart.map((items,index) => {
           return (
             <Row key={index}>
-              <Col ><Image src={items.image_url} thumbnail={true}/></Col>
-              <Col>{items.item_name}</Col>
-              <Col>{items.size}</Col>
-              <Col><Button variant='secondary' onClick={(e) => handleDecrease(e,items) }>-</Button>{items.quantity}<Button variant='secondary' onClick={(e) => handleIncrease(e,items) } >+</Button></Col>
-              <Col>{items.sub_total}</Col>
-              <Col><Button variant='danger' onClick={(e) => handleDelete(e,items) } >X</Button></Col>
+              <Col className='col-2' ><Image src={items.image_url} thumbnail={true}/></Col>
+              <Col className='col-3'>{items.item_name}</Col>
+              <Col className='col-1'>{items.size}</Col>
+              <Col className='col-3'><Button variant='secondary' onClick={(e) => handleDecrease(e,items) }>-</Button>{items.quantity}<Button variant='secondary' onClick={(e) => handleIncrease(e,items) } >+</Button></Col>
+              <Col className='col-2'>{items.sub_total}</Col>
+              <Col className='col-1'><Button variant='danger' onClick={(e) => handleDelete(e,items) } >x</Button></Col>
             </Row>
           )
         }) }

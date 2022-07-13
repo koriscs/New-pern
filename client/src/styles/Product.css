@@ -1,12 +1,19 @@
-.card {
+.product-card {
     margin: auto;
     margin-bottom: 20px;
+    margin-top: 20px;
+    border-top: 2px solid rgba(0, 162, 255, 0.486) ;
+    border-bottom: 2px solid rgba(0, 162, 255, 0.486) ;
 }
 .product-container {
     background-color: rgba(128, 128, 128, 0.13);
     border-radius: 20px;
     max-width: 720px;
+    margin: auto;
 
+}
+.card-img {
+    margin-top: 10px;
 }
 .btn-outline-success {
     margin: auto;
@@ -15,7 +22,17 @@
 }
 .btn-danger {
     max-width: 200px;
-    margin: auto !important;
-    left: 50%;
-    justify-self: center;
+    margin: auto;
+
+}
+.card-footer:last-child {
+    margin: auto;
+    border-radius: 10px;
+    border: 1px solid grey;
+}
+.product-form {
+    margin-left: 10px;
+}
+.form-label {
+    margin-right: 10px;
 }

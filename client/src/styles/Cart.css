@@ -1,0 +1,14 @@
+.cart-container .btn {
+    max-width: 30px;
+    max-height: 30px;
+    padding-left: 10px;
+    line-height: 0;
+
+}
+.card-container .btn-danger {
+    text-align: center;
+}
+
+.cart-container {
+    font-weight: bold;
+}

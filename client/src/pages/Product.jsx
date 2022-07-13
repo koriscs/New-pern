@@ -110,13 +110,13 @@ export default function Product() {
   return !loading ? (
     <Layout>
     <Container className='product-container' >
-        <Card style={{maxWidth: '22rem'}}  >
+        <Card  className='product-card' style={{maxWidth: '22rem'}}  >
           <Card.Img src={product.image_url} />
             <Card.Body>
               <Card.Title>{product.item_name}</Card.Title>
               <Card.Text>{product.description}</Card.Text>
             </Card.Body>
-              <Form onChange={sizeChange}>
+              <Form  className='product-form' onChange={sizeChange}>
                 <Form.Label>Size's: </Form.Label>
                 <Form.Check inline label='S' name="size"  value="S" id='S' type='radio' />
                 <Form.Check inline label='M' name="size"  value="M" id='M' type='radio' />
