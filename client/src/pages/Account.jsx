@@ -81,8 +81,9 @@ export default function Account() {
       <h1>Loading...</h1>
     </Layout>
   ) : (
-    <div>
+    
       <Layout>
+        <div>
         <Container className='account-container' >
         <h1>Your Address Information</h1>
           { address ? <div className='address-container' >
@@ -103,13 +104,15 @@ export default function Account() {
           )
         }): <div className='order-details' ><h2>No orders yet!</h2></div>}
         </div>
-        {checkout ? < StripeContainer/> : null}
-        <Button className='btn-checkout' variant='secondary' onClick={() => setCheckout(true)} >Checkout</Button>
+       
         <button onClick={() => logout()} className='logout-btn btn btn-primary'>
           Logout
         </button>
         </Container>
+        </div>
+        {checkout ? < StripeContainer/> : null}
+        <div className='checkout-container' ><Button className='btn-checkout' variant='secondary' onClick={() => setCheckout(true)} >Checkout</Button></div>
       </Layout>
-    </div>
+    
   )
 }

@@ -81,3 +81,14 @@
     flex-direction: column;
     align-items: center;
 }
+.FormGroup {
+    margin-top: 20px;
+}
+.pay-button {
+    margin: auto;
+    border-radius: 5px;
+}
+.checkout-container {
+    display: flex;
+    justify-content: center;
+}

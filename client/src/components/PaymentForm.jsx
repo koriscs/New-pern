@@ -68,13 +68,13 @@ export default function PaymentForm() {
   return (
     <>
     {!succes ?
-    <form onSubmit={handleSubmit}>
+    <form className='payment-form' onSubmit={handleSubmit}>
         <fieldset className='FormGroup' >
         <div className='FormRow' >
             <CardElement options={CARD_OPTIONS} />
         </div>
         </fieldset>
-        <button>Pay</button>    
+        <button className='pay-button' >Pay</button>    
      </form>
      :<div>
         <h2>You just bought some sweet stuff!</h2>
