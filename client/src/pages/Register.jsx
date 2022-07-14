@@ -39,9 +39,9 @@ export default function Register() {
 
   return (
     <Layout>
-         <form onSubmit={(e) => onSubmit(e) } className="container mt-3">
+  <form onSubmit={(e) => onSubmit(e) } className="register-container container mt-3">
     <h1>Register</h1>
-<div className='mb-3'>
+    <div className='mb-3'>
   <label htmlFor='firstname' className='form-label'>
     Firstname
   </label>

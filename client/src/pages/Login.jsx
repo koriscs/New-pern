@@ -4,6 +4,7 @@ import { onLogin, onGoogleLogin } from '../api/auth'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../redux/slices/authSlice';
+import Google from '../img/google.png'
 
 export default function Login() {
 
@@ -50,7 +51,7 @@ export default function Login() {
 
   return (
     <Layout>
-       <form onSubmit={(e) => onSubmit(e)} className='container mt-3'>
+       <form onSubmit={(e) => onSubmit(e)} className='container login-container mt-3'>
         <h1>Login</h1>
 
         <div className='mb-3'>
@@ -91,9 +92,11 @@ export default function Login() {
           Submit
         </button>
       </form>
-      <button className='btn btn-secondary ' onClick={googleLogin} >
-        Google Login
+      <div className='d-flex justify-content-center' >
+      <button className='btn btn-light ' onClick={googleLogin} ><img className='google-img' src={Google} />
+        Google
       </button>
+      </div>
     </Layout>
   )
 }

@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {  onLogout, fetchAccountInfo} from '../api/auth';
 import { unauthenticateUser } from '../redux/slices/authSlice';
-import { Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import StripeContainer from '../components/StripeContainer';
 import { addAccountInfo, deleteAccountInfo } from '../redux/slices/usersSlice';
 import { getCustomersOrders } from '../api/cart';
+import '../styles/Account.css'
+
 
 export default function Account() {
 
@@ -37,19 +39,21 @@ export default function Account() {
       setLoading(false)
       
     } catch (error) {
-      logout()
+      logout();
     }
   }
   const getOrders = async () =>{
+    if(user) {
     try{
-      if(user) {
       const results = await getCustomersOrders(user);
       setOrders(results.data);
-      }
+      
     }catch (error) {
       console.log(error);
     }
   }
+}
+
   useEffect(() => {
     accountInfo();
     getOrders();
@@ -62,9 +66,7 @@ export default function Account() {
   ) : (
     <div>
       <Layout>
-        <h1>Account</h1>
-        <h2>{`${user.id} , ${user.email}`}</h2>
-
+        <Container>
         <Link to='/account/address' ><Button>Give Address information</Button></Link>
         <button onClick={() => logout()} className='btn btn-primary'>
           Logout
@@ -80,6 +82,7 @@ export default function Account() {
             </div>
           )
         }): <h2>No orders yet!</h2>}
+        </Container>
       </Layout>
     </div>
   )

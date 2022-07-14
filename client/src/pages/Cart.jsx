@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,7 +6,7 @@ import { fetchCartItems , addItemToCart, deleteCart, updateCartItem} from '../ap
 import Image from 'react-bootstrap/Image';
 import { useSelector, useDispatch } from 'react-redux';
 import { setItemCount,deleteReduxCart, deleteItemFromRedux, updateQuantity} from '../redux/slices/cartSlice';
-import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Cart.css';
 
 export default function Cart() {
@@ -20,6 +19,7 @@ export default function Cart() {
       const dispatch = useDispatch();
       const { user } = useSelector(state=> state.users);
       const firstTimeRender = useRef(true);
+      const navigate = useNavigate();
 
       const fetchCart = async () =>{
 
@@ -85,7 +85,15 @@ export default function Cart() {
           dispatch(updateQuantity(item));
         }
       }
- 
+      const checkout = (e) =>{
+        e.preventDefault ();
+        if(isAuth) {
+          navigate('/account');
+        }else (
+          setError('Please log in!')
+        )
+
+      } 
 
       useEffect(() =>{
         fetchCart();
@@ -108,13 +116,23 @@ export default function Cart() {
   ) : (
     <Layout>
       <Container className='cart-container' >
-        {error ? <h1>{error}</h1> :cart.map((items,index) => {
+        {error ? <h3>{error}</h3>: (
+          <Row className='row-name' >
+            <Col className='col-2' ></Col>
+            <Col className='col-3' >Item Name</Col>
+            <Col className='col-1' >Size</Col>
+            <Col className='col-2' >Quantity</Col>
+            <Col className='col-2' >Price</Col>
+            <Col className='col-1' >Delete</Col>
+          </Row>
+        )}
+        {error ? null :cart.map((items,index) => {
           return (
-            <Row key={index}>
+            <Row   key={index}>
               <Col className='col-2' ><Image src={items.image_url} thumbnail={true}/></Col>
-              <Col className='col-3'>{items.item_name}</Col>
-              <Col className='col-1'>{items.size}</Col>
-              <Col className='col-3'>
+              <Col className='col-3 col2'>{items.item_name}</Col>
+              <Col className='col-1 col3'>{items.size}</Col>
+              <Col className='col-2 col4'>
                 <select className="m-2 border border-solid" value={items.quantity} onChange={(e)=>handleUpdate(e, items)}>
                     <option value='1'>1</option>
                     <option value='2'>2</option>
@@ -128,12 +146,15 @@ export default function Cart() {
                     <option value='10'>10</option>
                 </select>
               </Col>
-              <Col className='col-2'>{items.sub_total}</Col>
-              <Col className='col-1'><Button variant='danger' onClick={(e) => handleDelete(e,items) } >x</Button></Col>
+              <Col className='col-2 col5'>{items.sub_total}</Col>
+              <Col className='col-1 col6'><Button variant='danger' onClick={(e) => handleDelete(e,items) } >x</Button></Col>
             </Row>
           )
         }) }
       </Container>
+      <div className='d-flex justify-content-center' >
+        <Button onClick={(e)=>checkout(e)} className='checkout-btn' variant='outline-info' >Go To Checkout</Button>
+        </div>
     </Layout>
   )
 }

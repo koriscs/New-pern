@@ -1,0 +1,23 @@
+.google-img {
+    width: 30px;
+    height: 30px;
+}
+.btn-light {
+    max-width: 200px;
+}
+.btn-primary {
+    max-width: 200px;  
+}
+.btn-light {
+    margin-top: 20px;
+}
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
