@@ -3,6 +3,8 @@ import Layout from '../components/Layout'
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { unauthenticateUser } from '../redux/slices/authSlice';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function Address() {
     const [values, setValues] = useState({
@@ -17,6 +19,7 @@ export default function Address() {
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
    const onChange = (e) =>{
     setValues({...values, [e.target.name]: e.target.value})
@@ -68,6 +71,8 @@ export default function Address() {
 
   return (
     <Layout>
+      <div className='address-container' >
+      <Button variant='outline-danger' onClick={() =>{navigate(-1)}} >X</Button>
         <form onSubmit={(e) => onSubmit(e) } className="container mt-3">
     <h1>Give Address Information</h1>
 <div className='mb-3'>
@@ -172,6 +177,7 @@ export default function Address() {
   Submit
 </button>
     </form>
+    </div>
     </Layout>
     
   )

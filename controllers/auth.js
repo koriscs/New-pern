@@ -109,7 +109,8 @@ exports.getAddress = async (req, res) =>{
 
     const results = await pool.query('SELECT * FROM address WHERE customer_id = $1',[id])
         if(!results.rows.length) {
-            res.status(404).json({msg: "We didn't find address information for this customer"})
+            res.status(404).json({msg: "We didn't find address information for this customer",
+                                    success: false})
         } else {
         res.status(200).json(results.rows);
         }

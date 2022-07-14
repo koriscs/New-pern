@@ -17,10 +17,13 @@ export const usersSlice = createSlice({
         },
         deleteAccountInfo: (state, {payload}) =>{
             state.user = payload;
+        },
+        deleteAddressInfo: (state, {payload}) =>{
+            state.address = payload;
         }
     },
 })
 
-export const {addAccountInfo, addAddressInfo, deleteAccountInfo} = usersSlice.actions;
+export const {deleteAddressInfo ,addAccountInfo, addAddressInfo, deleteAccountInfo} = usersSlice.actions;
 
 export default usersSlice.reducer;

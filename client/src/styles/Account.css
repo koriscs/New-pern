@@ -21,3 +21,63 @@
     flex-direction: column;
     align-items: center;
 }
+.logout-btn {
+    margin-top: 20px;
+}
+.btn-checkout {
+    max-width: 200px;
+    margin-top: 20px;
+    
+}
+.order-details {
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
+  padding: 20px;
+  border-radius: 3px;
+  margin-top: 10px;
+  max-width: 500px;
+  margin: 20px;
+}
+.order-container h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.address-container {
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         3px 3px 5px 6px #ccc;
+    padding: 20px;
+    border-radius: 3px;
+    margin-top: 10px;
+    max-width: 500px;
+    margin: 20px;
+}
+.address-container .phone {
+    font-weight: bold;
+}
+.address-container .phone span {
+    font-weight: 300;
+}
+.account-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.account-container a {
+    min-width: 200px;
+}
+.account-container .btn {
+    min-width: 200px;
+}
+.btn-outline-danger {
+    max-width: 35px;
+    align-self: flex-end;
+}
+.address-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
