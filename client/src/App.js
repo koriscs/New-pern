@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
 import Address from './pages/Address';
+import Checkout from './pages/Checkout';
 
 
 const PrivateRoutes = () =>{
@@ -37,6 +38,7 @@ function App() {
       <Route element={<PrivateRoutes />}>
         <Route path='/account' element={<Account />} />
         <Route path='/account/address' element={<Address />} />
+        <Route path='/checkout' element={<Checkout />} />
       </Route>
 
       <Route element={<OpenRoutes />}>

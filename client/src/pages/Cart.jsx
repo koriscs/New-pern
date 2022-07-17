@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Image} from 'react-bootstrap';
 import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { fetchCartItems , addItemToCart, deleteCart, updateCartItem} from '../api/cart';
-import Image from 'react-bootstrap/Image';
 import { useSelector, useDispatch } from 'react-redux';
 import { setItemCount,deleteReduxCart, deleteItemFromRedux, updateQuantity} from '../redux/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
@@ -88,7 +87,7 @@ export default function Cart() {
       const checkout = (e) =>{
         e.preventDefault ();
         if(isAuth) {
-          navigate('/account');
+          navigate('/checkout');
         }else (
           setError('Please log in!')
         )

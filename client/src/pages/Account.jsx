@@ -7,7 +7,6 @@ import { unauthenticateUser } from '../redux/slices/authSlice';
 import { Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
-import StripeContainer from '../components/StripeContainer';
 import {deleteAddressInfo, addAccountInfo, deleteAccountInfo, addAddressInfo } from '../redux/slices/usersSlice';
 import { getCustomersOrders } from '../api/cart';
 import '../styles/Account.css'
@@ -17,7 +16,6 @@ export default function Account() {
 
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
-  const [checkout,setCheckout] = useState(false);
   const [orders, setOrders] = useState();
   const { user } = useSelector(state=> state.users)
   const { address } = useSelector(state=> state.users)
@@ -46,6 +44,7 @@ export default function Account() {
   const getAddressInfo = async () =>{
     if(user) {
       try{
+        console.log(user);
     const results = await fetchAddressInfo(user.id);
     console.log(results.data[0]);
     dispatch(addAddressInfo(results.data[0]));
@@ -110,8 +109,6 @@ export default function Account() {
         </button>
         </Container>
         </div>
-        {checkout ? < StripeContainer/> : null}
-        <div className='checkout-container' ><Button className='btn-checkout' variant='secondary' onClick={() => setCheckout(true)} >Checkout</Button></div>
       </Layout>
     
   )
