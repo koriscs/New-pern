@@ -124,7 +124,7 @@ export default function Home() {
     })}
       </Row>
     </Container>
-    <Button onClick={() =>{persistor.purge()}} >Purge</Button>
+    {/* <Button onClick={() =>{persistor.purge()}} >Purge</Button> */}
     </Layout>
   )
 }
