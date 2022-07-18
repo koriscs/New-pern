@@ -17,7 +17,7 @@ app.use(
     helmet.contentSecurityPolicy({
       useDefaults: true,
       directives: {
-        "script-src": ["'self'", "'unsafe-inline'", "example.com"],
+        "script-src": ["'self'", "'unsafe-inline'", "https://js.stripe.com/v3","https://apis.google.com/js/platform.js","https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"],
         "img-src": ["'self'", "https: data:"]
       }
     })
