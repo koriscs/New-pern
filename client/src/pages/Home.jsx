@@ -14,6 +14,7 @@ import { addItemToCart } from '../api/cart';
 import { fetchCartItems } from '../api/cart';
 import { persistor } from '../redux/store.js';
 
+
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState();

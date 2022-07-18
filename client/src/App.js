@@ -10,7 +10,7 @@ import Product from './pages/Product';
 import Cart from './pages/Cart';
 import Address from './pages/Address';
 import Checkout from './pages/Checkout';
-
+import { ToastContainer } from 'react-toastify';
 
 const PrivateRoutes = () =>{
 
@@ -47,6 +47,17 @@ function App() {
       </Route>
       
     </Routes>
+    <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              />
    </Router>
   )
 }

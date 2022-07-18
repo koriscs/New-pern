@@ -12,6 +12,9 @@ import { addItemToCart } from '../api/cart';
 import { fetchCartItems } from '../api/cart';
 import { setItemCount,deleteReduxCart } from '../redux/slices/cartSlice';
 import '../styles/Product.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Product() {
     let { productId } = useParams();
@@ -85,7 +88,17 @@ export default function Product() {
           image_url: product.image_url}
         dispatch(addItemToCartRedux(data))
       }
+      toast.success('Your item was added!', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
       navigate(`/`);
+      
     }
     const sizeChange = (e) =>{
       e.preventDefault();
@@ -124,6 +137,7 @@ export default function Product() {
                 <Form.Check inline label='L' name="size"  value="L" id='L' type='radio' />
               </Form>
             <Button variant='outline-success' onClick={addProduct} >Add to Cart</Button>
+           
           <Card.Footer>{product.price+"Ft"}</Card.Footer>
         </Card>
          <Button variant='danger' onClick={() =>{navigate(-1)}} >Go back</Button>
