@@ -74,7 +74,7 @@ export default function Checkout() {
          {loading ? null :cart.map((items,index) => {
           return (
             <Row   key={index}>
-              <Col className='col-2' ><Image src={items.image_url} thumbnail={true}/></Col>
+              <Col className='col-2' ><Image crossorigin="anonymous" src={items.image_url} thumbnail={true}/></Col>
               <Col className='col-3 col2'>{items.item_name}</Col>
               <Col className='col-1 col3'>{items.size}</Col>
               <Col className='col-2 col5'>{items.sub_total}</Col>
