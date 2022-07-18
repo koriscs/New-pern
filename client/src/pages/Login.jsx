@@ -40,7 +40,7 @@ export default function Login() {
     }
   }
   const googleLogin = async () =>{
-      window.open("/auth/google","_self");
+      window.open("https://fullstack-webshop.herokuapp.com/auth/google","_self");
       
   }
 
