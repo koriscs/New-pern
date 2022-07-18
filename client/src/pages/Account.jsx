@@ -26,6 +26,7 @@ export default function Account() {
 
       dispatch(unauthenticateUser());
       dispatch(deleteAccountInfo({}));
+      dispatch(deleteAddressInfo({}));
     } catch (error) {
       console.log(error.response)
     }
@@ -42,7 +43,7 @@ export default function Account() {
     }
   }
   const getAddressInfo = async () =>{
-    if(user) {
+    if(user.id) {
       try{
         console.log(user);
     const results = await fetchAddressInfo(user.id);
@@ -58,7 +59,7 @@ export default function Account() {
     }
   }
   const getOrders = async () =>{
-    if(user) {
+    if(user.id) {
     try{
       const results = await getCustomersOrders(user);
       setOrders(results.data);
@@ -71,9 +72,9 @@ export default function Account() {
 
   useEffect(() => {
     accountInfo();
-    getOrders();
     getAddressInfo();
-  },[])
+    getOrders();
+  },[user.id])
 
   return  loading ? (
      <Layout>

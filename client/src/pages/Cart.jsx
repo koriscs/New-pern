@@ -48,7 +48,7 @@ export default function Cart() {
           }
         } catch (error) {
           if(error.response.status === 404) {
-            setError(error.response.data.msg)
+            setError("Your cart is empty!")
             setLoading(false);
           }
         }
