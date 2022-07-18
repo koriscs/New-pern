@@ -40,7 +40,7 @@ export default function Login() {
     }
   }
   const googleLogin = async () =>{
-      window.open("http://localhost:3000/auth/google","_self");
+      window.open("/auth/google","_self");
       
   }
 
