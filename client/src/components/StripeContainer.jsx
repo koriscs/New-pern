@@ -10,6 +10,7 @@ const stripeTestPromise = loadStripe(PUBLIC_KEY);
 export default function StripeContainer() {
   return (
     <Elements stripe={stripeTestPromise} >
+        <p className='checkout-text' >This is only a project website!For check out pls use a fake Card! Card Number:4242 4242 4242 4242 and just fill out the rest with random numbers!</p>
         <PaymentForm/>
     </Elements>
   )

@@ -12,7 +12,7 @@ import { addItemToCart } from '../api/cart';
 import { fetchCartItems } from '../api/cart';
 import { setItemCount,deleteReduxCart } from '../redux/slices/cartSlice';
 import '../styles/Product.css';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -110,13 +110,14 @@ export default function Product() {
     useEffect(() =>{
         getProduct();
         fetchCart();
-  },[cart, addProduct]);
+  },[cart.length]);
 
   useEffect(() =>{
     if(!firstTimeRender.current) {
     dispatch(setItemCount(cart.length));
     }
-  },[cart,addProduct]);
+  },[cart.length]);
+
   useEffect(() =>{
     firstTimeRender.current = false;
   },[]);

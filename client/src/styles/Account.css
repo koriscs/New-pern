@@ -92,3 +92,7 @@
     display: flex;
     justify-content: center;
 }
+.checkout-text {
+    margin-top: 50px;
+    background-color: rgba(204, 204, 204, 0.178);
+}

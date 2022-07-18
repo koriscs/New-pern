@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import axios from 'axios';
 import { checkOutCustomer } from '../api/cart';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const CARD_OPTIONS = {
     iconStyle: "solid",
@@ -56,6 +57,16 @@ export default function PaymentForm() {
                 }
                 console.log("Successfull payment")
                 setSucces(true)
+                toast.success('You just bought some sweet stuff!', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
+                    
             }
         } catch (error) {
             console.log("Error", error)
@@ -77,7 +88,6 @@ export default function PaymentForm() {
         <button className='pay-button' >Pay</button>    
      </form>
      :<div>
-        <h2>You just bought some sweet stuff!</h2>
      </div>}
     </>
   )

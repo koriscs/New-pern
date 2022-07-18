@@ -96,13 +96,13 @@ export default function Cart() {
 
       useEffect(() =>{
         fetchCart();
-      },[ handleDelete, handleUpdate])
+      },[handleDelete, handleUpdate])
 
       useEffect(() =>{
         if(!firstTimeRender.current) {
         dispatch(setItemCount(cart.length));
         }
-      },[cart]);
+      },[cart.length]);
       useEffect(() =>{
         firstTimeRender.current = false;
       },[]);
