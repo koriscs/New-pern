@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { unauthenticateUser } from '../redux/slices/authSlice';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function Address() {
     const [values, setValues] = useState({
@@ -39,6 +40,16 @@ export default function Address() {
         street_number: "",
         mobile_number:""
     })
+    toast.success('Address information given!', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      })
+      navigate('/account');
     } catch (error) {
         console.log(error);
         setError(error.response.data.msg);

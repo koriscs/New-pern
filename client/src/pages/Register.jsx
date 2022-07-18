@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { onRegister } from '../api/auth'; 
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
 
@@ -13,7 +15,7 @@ export default function Register() {
     })
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
-
+    const navigate = useNavigate();
    const onChange = (e) =>{
     setValues({...values, [e.target.name]: e.target.value})
    } 
@@ -30,6 +32,16 @@ export default function Register() {
       email: "",
       password:""
     })
+    toast.success('Sucessfull registration!', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+      navigate('/login');
     } catch (error) {
         setError(error.response.data.errors[0].msg);
         setSuccess('');

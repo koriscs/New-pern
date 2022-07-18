@@ -96,3 +96,8 @@
     margin-top: 50px;
     background-color: rgba(204, 204, 204, 0.178);
 }
+.checkout-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

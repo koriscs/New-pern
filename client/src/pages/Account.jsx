@@ -91,7 +91,7 @@ export default function Account() {
             
             <p className='phone'>Your Phone Number: <span>{address.mobile_number}</span></p>
           </div>
-       : <Link to='/account/address' ><Button variant='outline-info' >Give Address</Button></Link>}
+       : <Link to='/account/address' ><Button variant='outline-info' >Give Address Info</Button></Link>}
         <div className='order-container'>
           <h1>Order History</h1>
         {orders ? orders.map((orders, index) =>{

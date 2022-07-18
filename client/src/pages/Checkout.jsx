@@ -1,11 +1,14 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef , useEffect} from 'react'
 import Layout from '../components/Layout'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchCartItems } from '../api/cart';
+import { fetchAddressInfo } from '../api/auth';
+import { addAddressInfo, deleteAddressInfo } from '../redux/slices/usersSlice';
 import StripeContainer from '../components/StripeContainer';
-import { useEffect } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Image } from 'react-bootstrap';
+import { Row, Col, Image, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function Checkout() {
 
@@ -14,12 +17,30 @@ export default function Checkout() {
     const [loading, setLoading] = useState(true);
     const [total,setTotal] = useState(0);
     const firstTimeRender = useRef(true);
+    const dispatch = useDispatch();
+    const { address } = useSelector(state=> state.users);
+    const navigate = useNavigate();
 
     const fetchCart = async () =>{
         const results = await fetchCartItems(user);
-
         setCart(results.data);
         setLoading(false);
+    }
+    const getAddressInfo = async () =>{
+      if(user.id) {
+        try{
+          console.log(user);
+      const results = await fetchAddressInfo(user.id);
+      console.log(results.data[0]);
+      dispatch(addAddressInfo(results.data[0]));
+        } catch(error) {
+          console.log(error.response.data.success);
+          if(error.response.data.success === false)
+          {
+            dispatch(deleteAddressInfo());
+          }
+        }
+      }
     }
     const cartTotal = () =>{
         let totalPrice = 0
@@ -35,12 +56,15 @@ export default function Checkout() {
     }
     useEffect(() =>{
         fetchCart();
-    },[])
+        getAddressInfo();
+    },[cart.length])
+
     useEffect(() =>{
         if(!firstTimeRender.current) {
             cartTotal();
         }
-      },[cart]);
+      },[cart.length]);
+
       useEffect(() =>{
         firstTimeRender.current = false;
       },[]);
@@ -60,7 +84,11 @@ export default function Checkout() {
         <div>
             <p>Cart Total: {total}Ft</p>
         </div>
-         < StripeContainer/>
+         {address ? < StripeContainer/>:
+         <div className='checkout-box'>
+          <p>You can't check out without address information!</p>
+          <Button onClick={() => navigate('/account/address')} > Give Address Info</Button>
+          </div>}
     </Layout>
   )
 }

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../redux/slices/authSlice';
 import Google from '../img/google.png'
+import { toast } from 'react-toastify';
 
 export default function Login() {
 
@@ -24,6 +25,15 @@ export default function Login() {
     try{
       await onLogin(values);
       dispatch(authenticateUser());
+      toast.success('Sucessfull login!', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     } catch (error) {
       console.log(error.response.data.errors[0].msg)
       setError(error.response.data.errors[0].msg)
