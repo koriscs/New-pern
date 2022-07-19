@@ -86,9 +86,9 @@ export default function Cart() {
       }
       const checkout = (e) =>{
         e.preventDefault ();
-        if(isAuth) {
+        if(isAuth && cart.length) {
           navigate('/checkout');
-        } else if(!cart.length) {
+        } else if(!cart.length && isAuth) {
           setError('Cant checkout with an empty cart!')          
         } else {
           setError('Please log in!')
