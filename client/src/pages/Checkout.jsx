@@ -46,7 +46,7 @@ export default function Checkout() {
         let totalPrice = 0
         if (cart) {
             cart.forEach(items =>{
-                 totalPrice = totalPrice +  Number(items.sub_total.replace(/[^0-9.-]+/g,"")/100);
+                 totalPrice = totalPrice +  parseInt(items.sub_total);
                  console.log("TotalPrice: "+totalPrice);
                  console.log("Subtotal: "+items.sub_total)
                  return totalPrice
