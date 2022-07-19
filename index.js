@@ -12,7 +12,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 require('./middlewear/passport');
 
 //initialize middlewears
-app.use(helmet());
+//app.use(helmet());
 // app.use(
 //   helmet.contentSecurityPolicy({
 //     useDefaults: true,
