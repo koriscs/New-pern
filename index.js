@@ -18,7 +18,9 @@ app.use(
     useDefaults: true,
     directives: {
       "script-src": ["'self'", "https://js.stripe.com","https://checkout.stripe.com"],
-      "img-src": ["'self'", "https: data:"]
+      "img-src": ["'self'", "https: data:"],
+      "connect-src":["'self","https://api.stripe.com"],
+      "frame-src":["'self","https://js.stripe.com","https://hooks.stripe.com"]
     }
   })
 )
