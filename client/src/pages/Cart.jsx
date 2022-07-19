@@ -88,9 +88,11 @@ export default function Cart() {
         e.preventDefault ();
         if(isAuth) {
           navigate('/checkout');
-        }else (
+        } else if(!cart.length) {
+          setError('Cant checkout with an empty cart!')          
+        } else {
           setError('Please log in!')
-        )
+      }
 
       } 
 
