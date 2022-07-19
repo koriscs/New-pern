@@ -129,6 +129,7 @@ exports.deleteAddress = async (req, res) =>{
 
 exports.stripePay = async (req, res) =>{
     let {amount, id } = req.body;
+    console.log("axios request sucessfully arrived!")
     try{
         const payment = await stripe.paymentIntents.create({
             amount,
@@ -137,7 +138,7 @@ exports.stripePay = async (req, res) =>{
             payment_method: id,
             confirm: true
         })
-       // console.log("Payment", payment)
+        console.log("Payment", payment)
         res.json({
             message: "Payment successful",
             success: true
