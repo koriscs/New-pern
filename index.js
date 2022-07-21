@@ -12,18 +12,18 @@ const isProduction = process.env.NODE_ENV === 'production';
 require('./middlewear/passport');
 
 //initialize middlewears
-//app.use(helmet());
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     useDefaults: true,
-//     directives: {
-//       "script-src": ["'self'", "https://js.stripe.com","https://checkout.stripe.com"],
-//       "img-src": ["'self'", "https: data:"],
-//       "connect-src":["'self","https://api.stripe.com"],
-//       "frame-src":["'self","https://js.stripe.com","https://hooks.stripe.com"]
-//     }
-//   })
-// )
+app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "script-src": ["'self'", "https://js.stripe.com","https://checkout.stripe.com"],
+      "img-src": ["'self'", "https: data:"],
+      "connect-src":["'self","https://api.stripe.com"],
+      "frame-src":["'self","https://js.stripe.com","https://hooks.stripe.com"]
+    }
+  })
+)
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
