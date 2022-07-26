@@ -17,7 +17,7 @@ app.use(
   helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-        scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com","https://apis.google.com","https://cdn.jsdelivr.net"],
+        scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com","https://apis.google.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe"],
         imgSrc: ["'self'", "https://i.ibb.co", "https://*.stripe.com" ],
         frameSrc:  [" 'self '", "https://js.stripe.com", "js.stripe.com",  "https://checkout.stripe.com"],
         connectSrc: ["'self'","https://checkout.stripe.com","https://api.stripe.com"]
