@@ -43,7 +43,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://fullstack-webshop.herokuapp.com/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-     console.log("This is the profile we get"+profile)
+     console.log("This is the profile we get"+JSON.stringify(profile))
       const { rows } = await pool.query("SELECT * FROM customers WHERE google_id = $1;",[profile.id])
       if(rows.length) {
         return done(null, rows[0], { message: 'User found' });
@@ -62,7 +62,7 @@ passport.use(new GoogleStrategy({
         profile.name.familyName,
         profile.id,])
 
-            console.log("This is the newGoogleUser"+newGoogleUser);
+            console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser));
         return done(null, newGoogleUser, { message: 'New user created' })}
 
      
