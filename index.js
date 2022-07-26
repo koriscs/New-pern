@@ -17,11 +17,11 @@ require('./middlewear/passport');
 //   helmet.contentSecurityPolicy({
 //     useDefaults: true,
 //     directives: {
-//       "script-src": [ "'self', js.stripe.com', 'https://checkout.stripe.com', 'js.stripe.com',  'https://billing.stripe.com'"],
+//       script-src: [ "'self', js.stripe.com', 'https://checkout.stripe.com', 'js.stripe.com',  'https://billing.stripe.com'"],
 //       styleSrc:  ["'unsafe-inline'"],
 //       connectSrc:[" * 'self' https://checkout.stripe.com https://billing.stripe.com"],
 //       frameSrc:  [" 'self  https://checkout.stripe.com  https://billing.stripe.com https://js.stripe.com "],
-//     }
+//     },
 //   })
 // )
 app.use(express.json());

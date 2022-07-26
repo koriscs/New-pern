@@ -48,7 +48,6 @@ passport.use(new GoogleStrategy({
 
       const { rows } = await pool.query("SELECT * FROM customers WHERE google_id = $1;",[profile.id])
       if(rows.length) {
-        console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser));
         return done(null, rows[0], { message: 'User found' });
       } else {
         //Check if we have an active user with this email and add google_id
@@ -58,8 +57,9 @@ passport.use(new GoogleStrategy({
             
           return done(null, newGoogleUser, { message: 'Google login added to user'})
         }
+
       
-        const newGoogleUser = await pool.query('INSERT INTO customers (email, first_name, last_name, google_id) VALUES ($1, $2, $3, $4) RETURNING *;',
+         pool.query('INSERT INTO customers (email, first_name, last_name, google_id) VALUES ($1, $2, $3, $4) RETURNING *;',
         [profile.emails[0].value,
         profile.name.givenName,
         profile.name.familyName,
@@ -68,8 +68,8 @@ passport.use(new GoogleStrategy({
           if(!results.rows.length) {
            return done(null, false);
           } else {
-            console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser));
-            return done(null, newGoogleUser.rows[0], { message: 'New user created' })
+            console.log("This is the newGoogleUser"+JSON.stringify(results.rows[0]));
+            return done(null, results.rows[0], { message: 'New user created' })
           }
       
         })
@@ -77,4 +77,5 @@ passport.use(new GoogleStrategy({
   }
 }
   ))
+
   
