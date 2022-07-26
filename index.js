@@ -18,7 +18,6 @@ app.use(
     useDefaults: true,
     directives: {
       scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com",  "https://billing.stripe.com"],
-      styleSrc:  ["'unsafe-inline'"],
     //   connectSrc:[" * 'self' https://checkout.stripe.com https://billing.stripe.com"],
     //   frameSrc:  [" 'self  https://checkout.stripe.com  https://billing.stripe.com https://js.stripe.com "],
     },
