@@ -81,7 +81,7 @@ exports.logout = async (req, res) =>{
         const token = sign(payload, SECRET)
         res.cookie('token', token, {httpOnly: true, maxAge: 1000*60*60})
 
-        return res.status(200).redirect('http://localhost:3001/google-login')
+        return res.status(200).redirect('/google-login')
 
     } catch (error) {
         console.log(error.message)
