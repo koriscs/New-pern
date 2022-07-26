@@ -46,6 +46,7 @@ passport.use(new GoogleStrategy({
      console.log("This is the profile we get"+JSON.stringify(profile))
       const { rows } = await pool.query("SELECT * FROM customers WHERE google_id = $1;",[profile.id])
       if(rows.length) {
+        console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser));
         return done(null, rows[0], { message: 'User found' });
       } else {
         //Check if we have an active user with this email and add google_id
@@ -63,7 +64,7 @@ passport.use(new GoogleStrategy({
         profile.id,])
 
             console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser));
-        return done(null, newGoogleUser, { message: 'New user created' })}
+        return done(null, newGoogleUser.rows[0], { message: 'New user created' })}
 
      
   }))
