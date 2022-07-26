@@ -17,10 +17,9 @@ app.use(
   helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-      scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com",  "https://billing.stripe.com"],
-      imgSrc: ["'self'","https://i.ibb.co" ]
-    //   connectSrc:[" * 'self' https://checkout.stripe.com https://billing.stripe.com"],
-    //   frameSrc:  [" 'self  https://checkout.stripe.com  https://billing.stripe.com https://js.stripe.com "],
+        scriptSrc: [ "'self'", "'unsafe-eval'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com",  "https://billing.stripe.com"],
+        imgSrc: ["'self'", "'unsafe-inline'", "https://i.ibb.co" ],
+        frameSrc:  [" 'self '", "https://js.stripe.com", "https://hooks.stripe.com"],
     },
     reportOnly: false,
   })
