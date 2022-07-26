@@ -18,9 +18,9 @@ app.use(
     useDefaults: true,
     directives: {
         scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com","https://apis.google.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
-        imgSrc: ["'self'", "https://i.ibb.co", "https://*.stripe.com" ],
-        frameSrc:  ["https://js.stripe.com", "js.stripe.com",  "https://checkout.stripe.com"],
-        connectSrc: ["'self'","https://checkout.stripe.com","https://api.stripe.com"]
+        imgSrc: ["'self'", "https://i.ibb.co", "https://*.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js" ],
+        frameSrc:  ["https://js.stripe.com", "js.stripe.com",  "https://checkout.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
+        connectSrc: ["'self'","https://checkout.stripe.com","https://api.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"]
     },
     reportOnly: false,
   })
