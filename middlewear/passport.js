@@ -57,12 +57,13 @@ passport.use(new GoogleStrategy({
           return done(null, newGoogleUser, { message: 'Google login added to user'})
         }
         
-        const newGoogleUser = await pool.query('INSERT INTO customers (email, first_name, last_name, google_id) VALUES ($1, $2, $3, $4) RETURNING *;',
+         await pool.query('INSERT INTO customers (email, first_name, last_name, google_id) VALUES ($1, $2, $3, $4);',
         [profile.emails[0].value,
         profile.name.givenName,
         profile.name.familyName,
         profile.id,])
-
+        
+      const newGoogleUser = await pool.query("SELECT * FROM customers WHERE google_id = $1;",[profile.id])
             console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser));
         return done(null, newGoogleUser.rows[0], { message: 'New user created' })}
 
