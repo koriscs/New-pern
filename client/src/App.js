@@ -11,6 +11,7 @@ import Cart from './pages/Cart';
 import Address from './pages/Address';
 import Checkout from './pages/Checkout';
 import { ToastContainer } from 'react-toastify';
+import GoogleLogin from './pages/GoogleLogin';
 
 const PrivateRoutes = () =>{
 
@@ -44,6 +45,7 @@ function App() {
       <Route element={<OpenRoutes />}>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/google-login' element={<GoogleLogin />} />
       </Route>
       
     </Routes>

@@ -25,7 +25,7 @@ authRouter.get('/google/success',passport.authenticate('jwt', {session: false}),
   if(req.user) {
   return res.status(200).json({succes: true , message: "Succes"});
   } else {
-    return res.status(404).json({succes: false, message: "Sorry"});
+    return res.status(404).json({succes: false, message: "Sorry something went wrong with google-login!"});
   }
 })
 

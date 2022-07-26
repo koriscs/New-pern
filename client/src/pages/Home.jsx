@@ -3,10 +3,9 @@ import Layout from '../components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Card, Row, Container, Button} from 'react-bootstrap';
 import { getAllProducts } from '../api/products';
-import { fetchAccountInfo, onGoogleLogin } from '../api/auth';
+import { fetchAccountInfo } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
-import { authenticateUser } from '../redux/slices/authSlice';
 import { addAccountInfo } from '../redux/slices/usersSlice';
 import '../styles/Home.css';
 import { setItemCount,deleteReduxCart } from '../redux/slices/cartSlice';
@@ -70,23 +69,14 @@ export default function Home() {
       setError(error.response);
     }
   }
-  const getUser = async () =>{
-    try{
-    const response = await onGoogleLogin();
-   if (response.status === 200) {
-     dispatch(authenticateUser());
-   }
-  } catch (error) {
-    console.log(error.response);
-  }
-  }
+
+  
   const fetchUserInfo = async() =>{
     const { data } = await fetchAccountInfo();
     dispatch(addAccountInfo(data));
   }
 
   useEffect( () =>{
-      getUser();
       fetchUserInfo();
       fetchProducts();
       fetchCart();

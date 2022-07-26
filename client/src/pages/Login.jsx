@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Layout from '../components/Layout'
-import { onLogin, onGoogleLogin } from '../api/auth'
+import { onLogin } from '../api/auth'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../redux/slices/authSlice';
@@ -40,24 +40,9 @@ export default function Login() {
     }
   }
   const googleLogin = async () =>{
-      window.open("https://fullstack-webshop.herokuapp.com/auth/google","_self");
+      window.open("http://localhost:3000/auth/google","_self");
       
   }
-
-  const getUser = async () =>{
-    try{
-    const response = await onGoogleLogin();
-   if (response.status === 200) {
-     dispatch(authenticateUser());
-   }
-  } catch (error) {
-    console.log(error.response);
-  }
-  }
-  
-  useEffect ( () =>{
-    getUser();
-  }) 
 
   return (
     <Layout>
