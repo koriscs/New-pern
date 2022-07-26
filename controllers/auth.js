@@ -70,6 +70,7 @@ exports.logout = async (req, res) =>{
  }
 
  exports.loginGoogle = async (req, res) =>{
+    
     let user = req.user
     let payload = {
         id: user.id,
