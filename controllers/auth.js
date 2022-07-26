@@ -76,7 +76,7 @@ exports.logout = async (req, res) =>{
         id: user.id,
         email: user.email
     }
-    console.log("cHECK-IN PAYLOAD"+JSON.stringify(payload));
+    console.log("req.user"+JSON.stringify(user));
     try {
         const token = sign(payload, SECRET)
         res.cookie('token', token, {httpOnly: true, maxAge: 1000*60*60})
