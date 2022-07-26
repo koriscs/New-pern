@@ -57,25 +57,16 @@ passport.use(new GoogleStrategy({
             
           return done(null, newGoogleUser, { message: 'Google login added to user'})
         }
-
       
-         pool.query('INSERT INTO customers (email, first_name, last_name, google_id) VALUES ($1, $2, $3, $4) RETURNING *;',
+        const newGoogleUser = await pool.query('INSERT INTO customers (email, first_name, last_name, google_id) VALUES ($1, $2, $3, $4) RETURNING *;',
         [profile.emails[0].value,
         profile.name.givenName,
         profile.name.familyName,
-        profile.id,], (error, results) => {
-          if (error) throw error;
-          if(!results.rows.length) {
-           return done(null, false);
-          } else {
-            console.log("This is the newGoogleUser"+JSON.stringify(results.rows[0]));
-            return done(null, results.rows[0], { message: 'New user created' })
-          }
+        profile.id,])
       
-        })
-         
-  }
-}
-  ))
+            console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser));
+        return done(null, newGoogleUser.rows[0], { message: 'New user created' })}
 
+     
+  }))
   
