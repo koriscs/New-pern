@@ -64,7 +64,7 @@ passport.use(new GoogleStrategy({
         profile.name.familyName,
         profile.id,])
       
-            console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser));
+            console.log("This is the newGoogleUser"+JSON.stringify(newGoogleUser.rows[0]));
         return done(null, newGoogleUser.rows[0], { message: 'New user created' })}
 
      
