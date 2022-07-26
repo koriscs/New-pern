@@ -2,8 +2,10 @@ import React , {useState} from 'react'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import axios from 'axios';
 import { checkOutCustomer } from '../api/cart';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { setItemCount } from '../redux/slices/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 const CARD_OPTIONS = {
     iconStyle: "solid",
@@ -31,6 +33,8 @@ export default function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useSelector(state=> state.users)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
@@ -58,7 +62,8 @@ export default function PaymentForm() {
                     console.log(error)
                 }
                 console.log("Successfull payment")
-                setSucces(true)
+                setSucces(true);
+                dispatch(setItemCount(0));
                 toast.success('You just bought some sweet stuff!', {
                     position: "top-center",
                     autoClose: 1000,
@@ -68,6 +73,7 @@ export default function PaymentForm() {
                     draggable: true,
                     progress: undefined,
                     });
+                navigate('/account')
                     
             }
         } catch (error) {

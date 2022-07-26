@@ -126,7 +126,7 @@ export default function Product() {
     <Layout>
     <Container className='product-container' >
         <Card  className='product-card' style={{maxWidth: '22rem'}}  >
-          <Card.Img crossorigin="anonymous" src={product.image_url} />
+          <Card.Img crossOrigin="anonymous" src={product.image_url} />
             <Card.Body>
               <Card.Title>{product.item_name}</Card.Title>
               <Card.Text>{product.description}</Card.Text>

@@ -100,7 +100,7 @@ export default function Home() {
       {products.map((items, index)=>{
       return (
           <Card style={{maxWidth: '22rem'}} key={index} className='card' >
-          <Card.Img crossorigin="anonymous" src={items.image_url} className='card-image' />
+          <Card.Img crossOrigin="anonymous" src={items.image_url} className='card-image' />
             <Card.Body>
               <Card.Title>{items.item_name}</Card.Title>
               <Card.Text>{items.description}</Card.Text>
