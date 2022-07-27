@@ -9,6 +9,7 @@ import StripeContainer from '../components/StripeContainer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Image, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import PaymentForm from '../components/PaymentForm';
 
 export default function Checkout() {
 
@@ -46,7 +47,7 @@ export default function Checkout() {
         let totalPrice = 0
         if (cart) {
             cart.forEach(items =>{
-                 totalPrice = totalPrice +  parseInt(items.sub_total);
+                 totalPrice = totalPrice + parseInt(items.sub_total);
                  console.log("TotalPrice: "+totalPrice);
                  console.log("Subtotal: "+items.sub_total)
                  return totalPrice
@@ -84,7 +85,7 @@ export default function Checkout() {
         <div>
             <p>Cart Total: {total}Ft</p>
         </div>
-         {address ? < StripeContainer/>:
+         {address ? < StripeContainer />:
          <div className='checkout-box'>
           <p>You can't check out without address information!</p>
           <Button onClick={() => navigate('/account/address')} > Give Address Info</Button>
