@@ -12,19 +12,19 @@ const isProduction = process.env.NODE_ENV === 'production';
 require('./middlewear/passport');
 
 //initialize middlewears
-app.use(helmet());
-app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-        scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com","https://apis.google.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
-        imgSrc: ["'self'", "https://i.ibb.co", "https://*.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js" ],
-        frameSrc:  ["https://js.stripe.com", "js.stripe.com",  "https://checkout.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
-        connectSrc: ["'self'","https://checkout.stripe.com","https://api.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"]
-    },
-    reportOnly: false,
-  })
-)
+// app.use(helmet());
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     useDefaults: true,
+//     directives: {
+//         scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com","https://apis.google.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
+//         imgSrc: ["'self'", "https://i.ibb.co", "https://*.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js" ],
+//         frameSrc:  ["https://js.stripe.com", "js.stripe.com",  "https://checkout.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
+//         connectSrc: ["'self'","https://checkout.stripe.com","https://api.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"]
+//     },
+//     reportOnly: false,
+//   })
+// )
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
