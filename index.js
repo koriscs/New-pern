@@ -12,6 +12,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 require('./middlewear/passport');
 
 //initialize middlewears
+//Could not make this work with stripe so i just turned it off
 // app.use(helmet());
 // app.use(
 //   helmet.contentSecurityPolicy({
@@ -47,6 +48,7 @@ const cartRouter = require('./routes/cart');
 app.use('/auth', authRouter);
 app.use('/products', productRouter);
 app.use('/cart', cartRouter);
+
 
 app.get('*',(req, res) =>{
     res.sendFile(path.join(__dirname,"client/build/index.html"));

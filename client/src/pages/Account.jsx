@@ -45,9 +45,7 @@ export default function Account() {
   const getAddressInfo = async () =>{
     if(user.id) {
       try{
-        console.log(user);
     const results = await fetchAddressInfo(user.id);
-    console.log(results.data[0]);
     dispatch(addAddressInfo(results.data[0]));
       } catch(error) {
         console.log(error.response.data.success);

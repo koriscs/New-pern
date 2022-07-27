@@ -28,7 +28,6 @@ export default function Cart() {
             
             await cartRedux.map(products => {
               const newObj = Object.assign({id:user.id}, products);
-              console.log(JSON.stringify(newObj));
               return addItemToCart(newObj);
             });
 
@@ -62,7 +61,6 @@ export default function Cart() {
       const handleDelete = async (e,item) =>{
         e.preventDefault();
         if (isAuth) {
-        console.log(JSON.stringify(item));
         item.id = user.id;
          const results = await deleteCart(item);
          if (!results.data.results.rows.length) {
@@ -79,8 +77,6 @@ export default function Cart() {
           item.id = user.id;
           await updateCartItem(item);
         } else {
-          console.log("Event target"+e.target.value);
-          console.log(JSON.stringify(item));
           dispatch(updateQuantity(item));
         }
       }

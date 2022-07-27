@@ -32,7 +32,6 @@ export default function Home() {
         
         await cartRedux.map(products => {
           const newObj = Object.assign({id:user.id}, products);
-          console.log(JSON.stringify(newObj));
           return addItemToCart(newObj);
         });
 

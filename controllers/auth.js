@@ -76,7 +76,6 @@ exports.logout = async (req, res) =>{
         id: user.id,
         email: user.email
     }
-    console.log("req.user"+JSON.stringify(user));
     try {
         const token = sign(payload, SECRET)
         res.cookie('token', token, {httpOnly: true, maxAge: 1000*60*60})
@@ -87,6 +86,7 @@ exports.logout = async (req, res) =>{
         console.log(error.message)
     }
 }
+
 exports.postAddress = async (req, res) =>{
     const id = parseInt(req.params.customerId);
   
@@ -106,8 +106,6 @@ exports.postAddress = async (req, res) =>{
 exports.getAddress = async (req, res) =>{
     const id = parseInt(req.params.customerId);
   
-    
-
     const results = await pool.query('SELECT * FROM address WHERE customer_id = $1',[id])
         if(!results.rows.length) {
             res.status(404).json({msg: "We didn't find address information for this customer",
@@ -122,6 +120,7 @@ exports.deleteAddress = async (req, res) =>{
 
     try{
     await pool.query('DELETE FROM address WHERE customer_id = $1;',[id]);
+
     return res.status(200).json({msg:"Your address was deleted"});
     } catch(error) {
         console.log(error);
@@ -130,7 +129,6 @@ exports.deleteAddress = async (req, res) =>{
 
 exports.stripePay = async (req, res) =>{
     let {amount, id } = req.body;
-    console.log("axios request sucessfully arrived!")
     try{
         const payment = await stripe.paymentIntents.create({
             amount,
@@ -139,7 +137,6 @@ exports.stripePay = async (req, res) =>{
             payment_method: id,
             confirm: true
         })
-        console.log("Payment", payment)
         res.json({
             message: "Payment successful",
             success: true

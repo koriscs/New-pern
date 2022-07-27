@@ -14,7 +14,6 @@ export default function GoogleLogin() {
     const getUser = async () =>{
         try{
         const response = await onGoogleLogin();
-        console.log("This is the response"+JSON.stringify(response));
        if (response.status === 200) {
          dispatch(authenticateUser());
          toast.success('Sucessfull login!', {

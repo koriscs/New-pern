@@ -66,7 +66,6 @@ exports.deleteCart = async (req, res) =>{
          } else {
                  await pool.query('DELETE FROM cart WHERE id = $1;', [cartId])
                  results = await pool.query('SELECT * FROM cart WHERE customer_id=$1',[id])
-                 console.log(results.rows);
                  return res.status(200).json({msg:"Your cart was deleted",results});
              }
 }
@@ -84,7 +83,6 @@ exports.updateCart = async (req, res) =>{
             const product_id = results.rows[0].product_id;
             results = await pool.query('SELECT * FROM products WHERE id = $1', [product_id])
                   const price = parseInt(results.rows[0].price);
-                 //console.log(price);
     
                 const sub_total = quantity * price;
                 await pool.query('UPDATE cart SET quantity = $1, sub_total = $2  WHERE id = $3;', [quantity, sub_total, cartId])

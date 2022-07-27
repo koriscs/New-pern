@@ -22,7 +22,6 @@ export async function fetchAccountInfo () {
 }
 
 export async function onGoogleLogin () {
-    console.log("Do we get to here?")
     return await axios.get(`/auth/google/success`)
 }
 

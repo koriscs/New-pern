@@ -38,30 +38,24 @@ export default function PaymentForm() {
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
-        console.log("Creating Payment method")
         const {error, paymentMethod} = await stripe.createPaymentMethod({
             type: "card",
             card: elements.getElement(CardElement)
         })
-        console.log("after payment method created!")
 
     if(!error) {
         try{
             const {id} = paymentMethod
-            console.log("Getting into payment cycle!")
             const response = await axios.post("/auth/checkout", {
                 amount: 100,
                 id
             })
             if(response.data.success) {
-                console.log(response);
                 try{
                   const results =  await checkOutCustomer(user);
-                  console.log(results.data.msg);
                 }catch(error){
                     console.log(error)
                 }
-                console.log("Successfull payment")
                 setSucces(true);
                 dispatch(setItemCount(0));
                 toast.success('You just bought some sweet stuff!', {

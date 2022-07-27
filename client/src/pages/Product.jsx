@@ -102,7 +102,6 @@ export default function Product() {
     }
     const sizeChange = (e) =>{
       e.preventDefault();
-      console.log("This is the event target"+e.target.value)
       setSize(e.target.value);
     } 
 
