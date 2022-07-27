@@ -1,5 +1,4 @@
 URL changes!!
 login page -open selfwindow
 middleware/passport.js google strategy
-controllers/auth google-login
 ssl: database/index.js
