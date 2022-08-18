@@ -30,4 +30,4 @@ There is an exampleENV.txt to help you create your own .env .I also changed 3 th
 3. client/src/pages/Login.jsx change the window.open url to your server url
 
 After these the Database structure and products can be found in database folder.
-In root folder npm run dev and /clinet folder npm run start.
+In root folder npm run dev and /client folder npm run start.
