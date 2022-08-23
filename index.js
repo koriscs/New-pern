@@ -5,27 +5,25 @@ const passport = require('passport');
 const cors = require('cors')
 require('dotenv').config();
 const path = require('path');
-const helmet = require('helmet');
+
 const port = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production';
 //import passport middleware
 require('./middlewear/passport');
 
 //initialize middlewears
-//Could not make this work with stripe so i just turned it off
-// app.use(helmet());
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     useDefaults: true,
-//     directives: {
-//         scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com","https://apis.google.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
-//         imgSrc: ["'self'", "https://i.ibb.co", "https://*.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js" ],
-//         frameSrc:  ["https://js.stripe.com", "js.stripe.com",  "https://checkout.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
-//         connectSrc: ["'self'","https://checkout.stripe.com","https://api.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"]
-//     },
-//     reportOnly: false,
-//   })
-// )
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+        scriptSrc: [ "'self'", "js.stripe.com", "https://checkout.stripe.com", "https://js.stripe.com","https://apis.google.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
+        imgSrc: ["'self'", "https://i.ibb.co", "https://*.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js" ],
+        frameSrc:  ["https://js.stripe.com", "js.stripe.com",  "https://checkout.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"],
+        connectSrc: ["'self'","https://checkout.stripe.com","https://api.stripe.com","https://cdn.jsdelivr.net","https://unpkg.com/@stripe/react-stripe-js@latest/dist/react-stripe.umd.min.js"]
+    },
+    reportOnly: false,
+  })
+)
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
